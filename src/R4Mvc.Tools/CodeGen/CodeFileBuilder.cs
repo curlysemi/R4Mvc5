@@ -33,6 +33,7 @@ namespace R4Mvc.Tools.CodeGen
                 "System.Diagnostics",
                 "System.Threading.Tasks",
                 "System.Web",
+                "System.Web.Routing",
                 "System.Web.Mvc",
                 settings.R4MvcNamespace,
             };

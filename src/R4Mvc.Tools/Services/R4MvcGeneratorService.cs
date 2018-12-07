@@ -53,7 +53,8 @@ namespace R4Mvc.Tools.Services
                     // If SplitIntoMultipleFiles is set, store the generated classes alongside the controller files.
                     if (_settings.SplitIntoMultipleFiles)
                     {
-                        var generatedFilePath = controller.GetFilePath().TrimEnd(".cs") + ".generated.cs";
+                        //var generatedFilePath = controller.GetFilePath().TrimEnd(".cs") + ".generated.cs";
+                        var generatedFilePath = Path.Combine(projectRoot, $"{controller.Name}Controller.generated.cs");
                         Console.WriteLine("Generating " + generatedFilePath.GetRelativePath(projectRoot));
                         var controllerFile = new CodeFileBuilder(_settings, true)
                             .WithNamespace(namespaceNode);
@@ -119,6 +120,16 @@ namespace R4Mvc.Tools.Services
             }
             */
 
+            var viewOnlyControllers = CreateViewOnlyControllerClasses_WithNames(controllers);//.ToArray<MemberDeclarationSyntax>();
+            var viewOnlyControllersWithNamespaces = new Dictionary<string, NamespaceDeclarationSyntax>();
+            if (viewOnlyControllers?.Any() == true)
+            {
+                foreach (var kvp in viewOnlyControllers)
+                {
+                    viewOnlyControllersWithNamespaces[kvp.Key] = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace)).AddMembers(kvp.Value);
+                }
+            }
+
             // R4MVC namespace used for the areas and Dummy class
             var r4Namespace = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace))
                  // add the dummy class uses in the derived controller partial class
@@ -136,8 +147,7 @@ namespace R4Mvc.Tools.Services
                         .WithModifiers(SyntaxKind.PrivateKeyword))
                     .WithField(Constants.DummyClassInstance, Constants.DummyClass, Constants.DummyClass, SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword)
                     .Build())
-                .AddMembers(CreateViewOnlyControllerClasses(controllers).ToArray<MemberDeclarationSyntax>())
-                .AddMembers(CreateAreaClasses(areaControllers).ToArray<MemberDeclarationSyntax>());
+                .AddMembers(CreateAreaClasses(areaControllers).ToArray<MemberDeclarationSyntax>()); // TODO: No idea if this needs to be different — IIRC, none of our apps use area?
                 //.AddMembers(CreatePagePathClasses(pages, out var topLevelPagePaths).ToArray<MemberDeclarationSyntax>());
 
             // create static MVC class and add the area and controller fields
@@ -174,6 +184,19 @@ namespace R4Mvc.Tools.Services
             //        SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.ReadOnlyKeyword);
             //}
 
+            if (viewOnlyControllersWithNamespaces?.Any() == true)
+            {
+                foreach (var kvp in viewOnlyControllersWithNamespaces)
+                {
+                    var fileName = $"{kvp.Key}.generated.cs";
+                    var file = new CodeFileBuilder(_settings, true)
+                        .WithMembers(kvp.Value);
+
+                    Console.WriteLine("Generating " + Path.DirectorySeparatorChar + fileName);
+                    _filePersistService.WriteFile(file.Build(), Path.Combine(projectRoot, fileName));
+                }
+            }
+
             // Generate a list of all static files from the wwwroot path
             var staticFileNode = _staticFileGenerator.GenerateStaticFiles(projectRoot);
 
@@ -184,13 +207,14 @@ namespace R4Mvc.Tools.Services
                         r4Namespace,
                         staticFileNode,
                         R4MvcHelpersClass(),
-                        ActionResultClass(),
-                        JsonResultClass(),
-                        ContentResultClass(),
-                        FileResultClass(),
-                        RedirectResultClass(),
-                        RedirectToActionResultClass(),
-                        RedirectToRouteResultClass())
+                        ActionResultClass()//,
+                        //JsonResultClass(),
+                        //ContentResultClass(),
+                        //FileResultClass(),
+                        //RedirectResultClass(),
+                        //RedirectToActionResultClass(),
+                        //RedirectToRouteResultClass()
+                        )
                     .WithMembers(hasPagesSupport,
                         PageActionResultClass(),
                         PageJsonResultClass(),
@@ -220,6 +244,29 @@ namespace R4Mvc.Tools.Services
                 _controllerGenerator.WithViewsClass(controllerClass, controller.Views);
                 yield return controllerClass.Build();
             }
+        }
+
+        public Dictionary<string, ClassDeclarationSyntax> CreateViewOnlyControllerClasses_WithNames(IList<ControllerDefinition> controllers)
+        {
+            var result = new Dictionary<string, ClassDeclarationSyntax>();
+            foreach (var controller in controllers.Where(c => c.Namespace == null).OrderBy(c => c.Area).ThenBy(c => c.Name))
+            {
+                var className = !string.IsNullOrEmpty(controller.Area)
+                    ? $"{controller.Area}Area_{controller.Name}Controller"
+                    : $"{controller.Name}Controller";
+                controller.FullyQualifiedGeneratedName = $"{_settings.R4MvcNamespace}.{className}";
+
+                var controllerClass = new ClassBuilder(className)
+                    .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
+                    .WithGeneratedNonUserCodeAttributes();
+                _controllerGenerator.WithViewsClass(controllerClass, controller.Views);
+                //yield return controllerClass.Build();
+
+                // TODO: Determine what should be here to handle areas properly?
+                result[className] = controllerClass.Build();
+            }
+
+            return result;
         }
 
         /*
@@ -302,12 +349,12 @@ namespace R4Mvc.Tools.Services
             return pathClasses.Values.Select(c => c.Build());
         }
 
-        private ClassDeclarationSyntax IActionResultDerivedClass(string className, string baseClassName, Action<ConstructorMethodBuilder> constructorParts = null)
+        private ClassDeclarationSyntax IActionResultDerivedClass(string className, string baseClassName, Action<ConstructorMethodBuilder> constructorParts = null, Action<ClassBuilder> anyOtherStuff = null)
         {
             var result = new ClassBuilder(className)                                    // internal partial class {className}
                 .WithGeneratedNonUserCodeAttributes()
                 .WithModifiers(SyntaxKind.InternalKeyword, SyntaxKind.PartialKeyword)
-                .WithBaseTypes(baseClassName, "IR4MvcActionResult")                     // : {baseClassName}, IR4MvcActionResult
+                .WithBaseTypes(baseClassName, Constants.IR4MvcActionResult)                     // : {baseClassName}, IR4MvcActionResult
                 .WithConstructor(c => c
                     .WithOther(constructorParts)
                     .WithModifiers(SyntaxKind.PublicKeyword)                        // public ctor(
@@ -321,6 +368,8 @@ namespace R4Mvc.Tools.Services
                 .WithProperty("Action", "string")                                       // public string Action { get; set; }
                 .WithProperty("Protocol", "string")                                     // public string Protocol { get; set; }
                 .WithProperty("RouteValueDictionary", "RouteValueDictionary");          // public RouteValueDictionary RouteValueDictionary { get; set; }
+
+            anyOtherStuff?.Invoke(result);
 
             return result.Build();
         }
@@ -359,7 +408,11 @@ namespace R4Mvc.Tools.Services
                 .Build();
 
         public ClassDeclarationSyntax ActionResultClass()
-            => IActionResultDerivedClass(Constants.ActionResultClass, "ActionResult");
+            => IActionResultDerivedClass(Constants.ActionResultClass, "ActionResult", anyOtherStuff:
+                r => r.WithMethod("ExecuteResult", "void", m => m
+                    .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.OverrideKeyword)
+                        .WithParameter("context", "ControllerContext")
+                        .WithBody(b => Block())));
 
         public ClassDeclarationSyntax JsonResultClass()
             => IActionResultDerivedClass(Constants.JsonResultClass, "JsonResult",

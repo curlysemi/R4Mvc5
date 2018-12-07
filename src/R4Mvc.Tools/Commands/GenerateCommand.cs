@@ -140,6 +140,8 @@ project-path:
                 //}
                 Console.WriteLine();
 
+                var oldGeneratedFiles = Directory.GetFiles(projectRoot, "*.generated.cs", SearchOption.AllDirectories);
+
                 // Generate the R4Mvc.generated.cs file
                 _generatorService.Generate(projectRoot, controllers, /*pages, hasPagesSupport*/ false);
 
@@ -154,8 +156,9 @@ project-path:
                     CreateR4MvcUserFile(r4MvcFile);
 
                 // Cleanup old generated files
-                var generatedFiles = Directory.GetFiles(projectRoot, "*.generated.cs", SearchOption.AllDirectories);
-                foreach (var file in generatedFiles)
+                var newGeneratedFiles = Directory.GetFiles(projectRoot, "*.generated.cs", SearchOption.AllDirectories);
+                var notGeneratedFromThisExecution = oldGeneratedFiles.Where(f => !newGeneratedFiles.Contains(f));
+                foreach (var file in notGeneratedFromThisExecution)
                 {
                     if (File.Exists(file.Replace(".generated.cs", ".cs")) ||
                         string.Equals(Constants.R4MvcGeneratedFileName, Path.GetFileName(file)))

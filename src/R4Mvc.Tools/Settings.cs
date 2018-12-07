@@ -7,7 +7,7 @@
         public bool UpdateGeneratedByVersion { get; set; } = true;
         public string HelpersPrefix { get; set; } = "MVC";
         public string PageHelpersPrefix { get; set; } = "MVCPages";
-        public string R4MvcNamespace { get; set; } = "R4Mvc";
+        public string R4MvcNamespace { get; set; } = "T4MVC";
         public string LinksNamespace { get; set; } = "Links";
         public bool SplitIntoMultipleFiles { get; set; } = true;
         public bool SplitViewOnlyPagesIntoMultipleFiles { get; set; } = true;

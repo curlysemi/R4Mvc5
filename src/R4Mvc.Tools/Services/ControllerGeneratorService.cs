@@ -168,7 +168,7 @@ namespace R4Mvc.Tools.Services
                     .WithGeneratedNonUserCodeAttributes()
                     .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
-                        .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
+                        .VariableFromMethodCall("callInfo", "result", Constants.GetR4ActionResult)
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
 
                 /* [GeneratedCode, DebuggerNonUserCode]
@@ -196,7 +196,7 @@ namespace R4Mvc.Tools.Services
                     .WithGeneratedNonUserCodeAttributes()
                     .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
-                        .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
+                        .VariableFromMethodCall("callInfo", "result", Constants.GetR4ActionResult)
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
 
                 /* [GeneratedCode, DebuggerNonUserCode]
@@ -225,7 +225,7 @@ namespace R4Mvc.Tools.Services
                     .WithGeneratedNonUserCodeAttributes()
                     .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
-                        .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
+                        .VariableFromMethodCall("callInfo", "result", Constants.GetR4ActionResult)
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
 
                 /* [GeneratedCode, DebuggerNonUserCode]
@@ -253,7 +253,7 @@ namespace R4Mvc.Tools.Services
                     .WithGeneratedNonUserCodeAttributes()
                     .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
-                        .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
+                        .VariableFromMethodCall("callInfo", "result", Constants.GetR4ActionResult)
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
 
                 /* [GeneratedCode, DebuggerNonUserCode]
@@ -377,7 +377,7 @@ namespace R4Mvc.Tools.Services
 
         internal static string GetR4MVCControllerClassName(INamedTypeSymbol controllerClass)
         {
-            return string.Format("R4MVC_{0}", controllerClass.Name);
+            return $"{Constants.PrefixName}_{controllerClass.Name}";
         }
 
         public ClassBuilder WithViewsClass(ClassBuilder classBuilder, IEnumerable<View> viewFiles)
