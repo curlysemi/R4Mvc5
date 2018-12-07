@@ -1,7 +1,8 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -49,15 +50,18 @@ namespace R4Mvc.Tools.Extensions
 
         public static bool IsNotR4MvcExcluded(this ISymbol method)
         {
+            return true;
+            /* 
             return !method.GetAttributes().Any(a => a.AttributeClass.InheritsFrom<R4MvcExcludeAttribute>() || a.AttributeClass.Name == "R4MvcExclude");
+            */
         }
 
         private static string[] _controllerClassMethodNames = null;
-        private static string[] _pageClassMethodNames = null;
+        //private static string[] _pageClassMethodNames = null;
         public static void PopulateControllerClassMethodNames(CSharpCompilation compilation)
         {
             var result = new List<string>();
-            var typeSymbol = compilation.GetTypeByMetadataName("Microsoft.AspNetCore.Mvc.Controller");
+            var typeSymbol = compilation.GetTypeByMetadataName("System.Web.Mvc.Controller");
             while (typeSymbol != null)
             {
                 var methodNames = typeSymbol.GetMembers()
@@ -68,17 +72,17 @@ namespace R4Mvc.Tools.Extensions
             }
             _controllerClassMethodNames = result.Distinct().ToArray();
 
-            result = new List<string>();
-            typeSymbol = compilation.GetTypeByMetadataName("Microsoft.AspNetCore.Mvc.RazorPages.PageModel");
-            while (typeSymbol != null)
-            {
-                var methodNames = typeSymbol.GetMembers()
-                    .Where(r => r.Kind == SymbolKind.Method && r.DeclaredAccessibility == Accessibility.Public && r.IsVirtual)
-                    .Select(s => s.Name);
-                result.AddRange(methodNames);
-                typeSymbol = typeSymbol.BaseType;
-            }
-            _pageClassMethodNames = result.Distinct().ToArray();
+            //result = new List<string>();
+            //typeSymbol = compilation.GetTypeByMetadataName("Microsoft.AspNetCore.Mvc.RazorPages.PageModel");
+            //while (typeSymbol != null)
+            //{
+            //    var methodNames = typeSymbol.GetMembers()
+            //        .Where(r => r.Kind == SymbolKind.Method && r.DeclaredAccessibility == Accessibility.Public && r.IsVirtual)
+            //        .Select(s => s.Name);
+            //    result.AddRange(methodNames);
+            //    typeSymbol = typeSymbol.BaseType;
+            //}
+            //_pageClassMethodNames = result.Distinct().ToArray();
         }
 
         public static bool IsMvcAction(this IMethodSymbol method)
@@ -90,6 +94,7 @@ namespace R4Mvc.Tools.Extensions
             return true;
         }
 
+        /*
         public static bool IsRazorPageAction(this IMethodSymbol method)
         {
             if (method.GetAttributes().Any(a => a.AttributeClass.InheritsFrom<NonActionAttribute>()))
@@ -100,6 +105,7 @@ namespace R4Mvc.Tools.Extensions
                 return false;
             return true;
         }
+        */
 
         public static IEnumerable<IMethodSymbol> GetPublicNonGeneratedControllerMethods(this ITypeSymbol controller)
         {
@@ -111,6 +117,7 @@ namespace R4Mvc.Tools.Extensions
                 .Where(IsMvcAction);
         }
 
+        /*
         public static IEnumerable<IMethodSymbol> GetPublicNonGeneratedPageMethods(this ITypeSymbol controller)
         {
             return controller.GetMembers()
@@ -120,6 +127,7 @@ namespace R4Mvc.Tools.Extensions
                 .Where(IsNotR4MvcExcluded)
                 .Where(IsRazorPageAction);
         }
+        */
 
         private static AttributeSyntax CreateGeneratedCodeAttribute()
         {

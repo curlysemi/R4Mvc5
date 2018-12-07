@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Web.Mvc;
+using AreaAttribute = System.Web.Mvc.RouteAreaAttribute;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using R4Mvc.Tools;
 using R4Mvc.Tools.CodeGen;
 using R4Mvc.Tools.Extensions;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static R4Mvc.Tools.Extensions.SyntaxNodeHelpers;
+
 
 namespace R4Mvc.Tools.Services
 {
@@ -162,7 +166,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToAction", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("result", "IActionResult")
+                    .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
@@ -176,7 +180,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToAction", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("taskResult", "Task<IActionResult>")
+                    .WithParameter("taskResult", $"Task<{Constants.IActionResultClass}>")
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToAction", "taskResult.Result")))
 
@@ -190,7 +194,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToActionPermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("result", "IActionResult")
+                    .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
@@ -204,7 +208,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToActionPermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("taskResult", "Task<IActionResult>")
+                    .WithParameter("taskResult", $"Task<{Constants.IActionResultClass}>")
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToActionPermanent", "taskResult.Result")));
 
@@ -219,7 +223,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToPage", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("result", "IActionResult")
+                    .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
@@ -233,7 +237,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToPage", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("taskResult", "Task<IActionResult>")
+                    .WithParameter("taskResult", $"Task<{Constants.IActionResultClass}>")
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToPage", "taskResult.Result")))
 
@@ -247,7 +251,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToPagePermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("result", "IActionResult")
+                    .WithParameter("result", Constants.IActionResultClass)
                     .WithBody(b => b
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
@@ -261,7 +265,7 @@ namespace R4Mvc.Tools.Services
                 .WithMethod("RedirectToPagePermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
-                    .WithParameter("taskResult", "Task<IActionResult>")
+                    .WithParameter("taskResult", $"Task<{Constants.IActionResultClass}>")
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToPagePermanent", "taskResult.Result")));
         }
@@ -279,7 +283,7 @@ namespace R4Mvc.Tools.Services
                      *  return new R4Mvc_Microsoft_AspNetCore_Mvc_ActionResult(Area, Name, ActionNames.{Action});
                      * }
                      */
-                    .WithMethod(method.Key, "IActionResult", m => m
+                    .WithMethod(method.Key, Constants.IActionResultClass, m => m
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.VirtualKeyword)
                         .WithNonActionAttribute()
                         .WithGeneratedNonUserCodeAttributes()
@@ -318,13 +322,13 @@ namespace R4Mvc.Tools.Services
                     callInfoType = Constants.FileResultClass;
                 else if (methodReturnType.InheritsFrom<RedirectResult>())
                     callInfoType = Constants.RedirectResultClass;
-                else if (methodReturnType.InheritsFrom<RedirectToActionResult>())
-                    callInfoType = Constants.RedirectToActionResultClass;
+                //else if (methodReturnType.InheritsFrom<RedirectToActionResult>())
+                //    callInfoType = Constants.RedirectToActionResultClass;
                 else if (methodReturnType.InheritsFrom<RedirectToRouteResult>())
                     callInfoType = Constants.RedirectToRouteResultClass;
-                else if (methodReturnType.InheritsFrom<IConvertToActionResult>())
-                    callInfoType = Constants.ActionResultClass;
-                else if ((!isTaskResult || isGenericTaskResult) && !methodReturnType.InheritsFrom<IActionResult>())
+                //else if (methodReturnType.InheritsFrom<IConvertToActionResult>())
+                //    callInfoType = Constants.ActionResultClass;
+                else if ((!isTaskResult || isGenericTaskResult) && !methodReturnType.InheritsFrom<ActionResult>())
                 {
                     // Not a return type we support right now. Returning
                     continue;

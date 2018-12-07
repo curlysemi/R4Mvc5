@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetSimple.Test", "test\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleModels", "samples\SampleModels\SampleModels.csproj", "{8F6D7DDE-98A0-4808-BD91-C1CF2E0AAC69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5App", "samples\Mvc5App\Mvc5App.csproj", "{AF96DB55-A63A-4894-BDDC-140B156A4E68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{8F6D7DDE-98A0-4808-BD91-C1CF2E0AAC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F6D7DDE-98A0-4808-BD91-C1CF2E0AAC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F6D7DDE-98A0-4808-BD91-C1CF2E0AAC69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF96DB55-A63A-4894-BDDC-140B156A4E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF96DB55-A63A-4894-BDDC-140B156A4E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF96DB55-A63A-4894-BDDC-140B156A4E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF96DB55-A63A-4894-BDDC-140B156A4E68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{86B3FF8A-284E-4070-9120-D343366B18E2} = {B9FF7D5E-784B-4C4A-B6E6-286C1E3D131E}
 		{75510011-133B-4A05-AD09-A399CDBFA3A5} = {30626644-0E8A-4610-A0A9-274E91F1A037}
 		{8F6D7DDE-98A0-4808-BD91-C1CF2E0AAC69} = {B9FF7D5E-784B-4C4A-B6E6-286C1E3D131E}
+		{AF96DB55-A63A-4894-BDDC-140B156A4E68} = {B9FF7D5E-784B-4C4A-B6E6-286C1E3D131E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B90C19F2-2B5E-42AD-AE1D-27AD17E4DDB4}

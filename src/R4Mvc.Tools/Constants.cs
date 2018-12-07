@@ -2,7 +2,7 @@
 {
     internal static class Constants
     {
-        internal const string ProjectName = "R4Mvc";
+        internal const string ProjectName = "R4Mvc5";
         internal const string Version = "1.0";
 
         internal const string R4MvcFileName = "R4Mvc.cs";
@@ -15,7 +15,8 @@
         internal const string R4MvcHelpersClass = "R4MvcHelpers";
         internal const string R4MvcHelpers_ProcessVirtualPath = "ProcessVirtualPath";
 
-        private const string ActionResultNamespace = "_Microsoft_AspNetCore_Mvc_";
+        internal const string IActionResultClass = "ActionResult"; // IActionResult
+        private const string ActionResultNamespace = "_System_Web_Mvc_";
         internal const string ActionResultClass = ProjectName + ActionResultNamespace + "ActionResult";
         internal const string JsonResultClass = ProjectName + ActionResultNamespace + "JsonResult";
         internal const string ContentResultClass = ProjectName + ActionResultNamespace + "ContentResult";

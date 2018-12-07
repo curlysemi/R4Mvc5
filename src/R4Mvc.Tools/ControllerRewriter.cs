@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace R4Mvc.Tools
 {
@@ -51,8 +52,8 @@ namespace R4Mvc.Tools
         internal static bool ControllerShouldBeProcessed(INamedTypeSymbol symbol)
             => symbol.DeclaredAccessibility == Accessibility.Public &&
                 !symbol.IsAbstract &&
-                symbol.InheritsFrom<Controller>() &&
-                !symbol.GetAttributes().Any(a => a.AttributeClass.InheritsFrom<R4MvcExcludeAttribute>());
+                symbol.InheritsFrom<Controller>()
+                ;//&& !symbol.GetAttributes().Any(a => a.AttributeClass.InheritsFrom<R4MvcExcludeAttribute>());
 
         public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
         {

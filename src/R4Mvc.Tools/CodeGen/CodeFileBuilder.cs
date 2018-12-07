@@ -32,8 +32,8 @@ namespace R4Mvc.Tools.CodeGen
                 "System.CodeDom.Compiler",
                 "System.Diagnostics",
                 "System.Threading.Tasks",
-                "Microsoft.AspNetCore.Mvc",
-                "Microsoft.AspNetCore.Routing",
+                "System.Web",
+                "System.Web.Mvc",
                 settings.R4MvcNamespace,
             };
             if (settings.ReferencedNamespaces != null)

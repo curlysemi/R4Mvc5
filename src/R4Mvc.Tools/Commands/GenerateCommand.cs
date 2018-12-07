@@ -33,19 +33,19 @@ project-path:
         public class Runner : ICommandRunner
         {
             private readonly IControllerRewriterService _controllerRewriter;
-            private readonly IPageRewriterService _pageRewriter;
+            //private readonly IPageRewriterService _pageRewriter;
             private readonly IEnumerable<IViewLocator> _viewLocators;
             private readonly IEnumerable<IPageViewLocator> _pageViewLocators;
             private readonly R4MvcGeneratorService _generatorService;
             private readonly Settings _settings;
             private readonly IGeneratedFileTesterService _generatedFileTesterService;
             private readonly IFilePersistService _filePersistService;
-            public Runner(IControllerRewriterService controllerRewriter, IPageRewriterService pageRewriter, IEnumerable<IViewLocator> viewLocators,
+            public Runner(IControllerRewriterService controllerRewriter/*, IPageRewriterService pageRewriter*/, IEnumerable<IViewLocator> viewLocators,
                 IEnumerable<IPageViewLocator> pageViewLocators, R4MvcGeneratorService generatorService, Settings settings,
                 IGeneratedFileTesterService generatedFileTesterService, IFilePersistService filePersistService)
             {
                 _controllerRewriter = controllerRewriter;
-                _pageRewriter = pageRewriter;
+                //_pageRewriter = pageRewriter;
                 _viewLocators = viewLocators;
                 _pageViewLocators = pageViewLocators;
                 _generatorService = generatorService;
@@ -90,7 +90,7 @@ project-path:
 
                 // Get MVC version
                 var mvcAssembly = compilation.ReferencedAssemblyNames
-                    .Where(a => a.Name == "Microsoft.AspNetCore.Mvc")
+                    .Where(a => a.Name == "System.Web.Mvc")
                     .FirstOrDefault();
                 Console.WriteLine($"Detected MVC version: {mvcAssembly.Version}");
                 Console.WriteLine();
@@ -121,27 +121,27 @@ project-path:
                 foreach (var controller in controllers.Where(a => !string.IsNullOrEmpty(a.Area)))
                     controller.AreaKey = areaMap[controller.Area];
 
-                // Analyse the razor pages in the project (updating them to be partial), as well as locate all the view files
-                var hasPagesSupport = mvcAssembly.Version >= new Version(2, 0, 0, 0);
-                IList<PageView> pages;
-                if (hasPagesSupport)
-                {
-                    var definitions = _pageRewriter.RewritePages(compilation);
-                    pages = _pageViewLocators.SelectMany(x => x.Find(projectRoot)).ToList();
+                //// Analyse the razor pages in the project (updating them to be partial), as well as locate all the view files
+                //var hasPagesSupport = mvcAssembly.Version >= new Version(2, 0, 0, 0);
+                //IList<PageView> pages;
+                //if (hasPagesSupport)
+                //{
+                //    var definitions = _pageRewriter.RewritePages(compilation);
+                //    pages = _pageViewLocators.SelectMany(x => x.Find(projectRoot)).ToList();
 
-                    foreach (var page in pages)
-                    {
-                        page.Definition = definitions.FirstOrDefault(d => d.GetFilePath() == (page.FilePath + ".cs"));
-                    }
-                }
-                else
-                {
-                    pages = new List<PageView>();
-                }
+                //    foreach (var page in pages)
+                //    {
+                //        page.Definition = definitions.FirstOrDefault(d => d.GetFilePath() == (page.FilePath + ".cs"));
+                //    }
+                //}
+                //else
+                //{
+                //    pages = new List<PageView>();
+                //}
                 Console.WriteLine();
 
                 // Generate the R4Mvc.generated.cs file
-                _generatorService.Generate(projectRoot, controllers, pages, hasPagesSupport);
+                _generatorService.Generate(projectRoot, controllers, /*pages, hasPagesSupport*/ false);
 
                 // updating the r4mvc.json settings file
                 _settings._generatedByVersion = Program.GetVersion();

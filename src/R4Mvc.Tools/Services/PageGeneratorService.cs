@@ -1,3 +1,4 @@
+/*
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,15 +43,15 @@ namespace R4Mvc.Tools.Services
                 .Where(c => !c.IsImplicitlyDeclared)
                 .Any();
             if (!gotCustomConstructors)
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * public ctor() { }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //public ctor() { }
+                 
                 genControllerClass.WithConstructor(c => c
                     .WithModifiers(SyntaxKind.PublicKeyword)
                     .WithGeneratedNonUserCodeAttributes());
-            /* [GeneratedCode, DebuggerNonUserCode]
-             * public ctor(Dummy d) {}
-             */
+             //[GeneratedCode, DebuggerNonUserCode]
+             //public ctor(Dummy d) {}
+             
             genControllerClass.WithConstructor(c => c
                 .WithModifiers(SyntaxKind.ProtectedKeyword)
                 .WithGeneratedNonUserCodeAttributes()
@@ -70,23 +71,23 @@ namespace R4Mvc.Tools.Services
                 .WithStringField("Name", pageView.PagePath, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)
                 .WithStringField("NameConst", pageView.PagePath, SyntaxKind.PublicKeyword, SyntaxKind.ConstKeyword)
                 .WithStaticFieldBackedProperty("HandlerNames", "HandlerNamesClass", SyntaxKind.PublicKeyword)
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * public class ActionNamesClass
-                 * {
-                 *  public readonly string {action} = "{action}";
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //public class ActionNamesClass
+                 //{
+                  //public readonly string {action} = "{action}";
+                 //}
+                 
                 .WithChildClass("HandlerNamesClass", ac => ac
                     .WithModifiers(SyntaxKind.PublicKeyword)
                     .WithGeneratedNonUserCodeAttributes()
                     .ForEach(handlerNames, (c, m) => c
                         .WithStringField(m, m, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * public class ActionNameConstants
-                 * {
-                 *  public const string {action} = "{action}";
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //public class ActionNameConstants
+                 //{
+                  //public const string {action} = "{action}";
+                 //}
+                 
                 .WithChildClass("HandlerNameConstants", ac => ac
                     .WithModifiers(SyntaxKind.PublicKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -122,12 +123,12 @@ namespace R4Mvc.Tools.Services
             var className = GetR4MVCControllerClassName(page.Symbol);
             page.FullyQualifiedR4ClassName = $"{page.Namespace}.{className}";
 
-            /* [GeneratedCode, DebuggerNonUserCode]
+             [GeneratedCode, DebuggerNonUserCode]
              * public partial class R4MVC_{Controller} : {Controller}
              * {
              *  public R4MVC_{Controller}() : base(Dummy.Instance) {}
              * }
-             */
+
             var r4ControllerClass = new ClassBuilder(className)
                 .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
                 .WithGeneratedNonUserCodeAttributes()
@@ -142,13 +143,12 @@ namespace R4Mvc.Tools.Services
         private void AddRedirectMethods(ClassBuilder genControllerClass)
         {
             genControllerClass
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToAction(IActionResult result)
-                 * {
-                 *  var callInfo = result.GetR4ActionResult();
-                 *  return RedirectToRoute(callInfo.RouteValueDictionary);
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToAction(IActionResult result)
+                 //{
+                  //var callInfo = result.GetR4ActionResult();
+                  //return RedirectToRoute(callInfo.RouteValueDictionary);
+                 //}
                 .WithMethod("RedirectToAction", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -157,12 +157,11 @@ namespace R4Mvc.Tools.Services
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToAction(Task<IActionResult> taskResult)
-                 * {
-                 *  return RedirectToAction(taskResult.Result);
-                 * }
-                */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToAction(Task<IActionResult> taskResult)
+                 //{
+                  //return RedirectToAction(taskResult.Result);
+                 //}
                 .WithMethod("RedirectToAction", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -170,13 +169,13 @@ namespace R4Mvc.Tools.Services
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToAction", "taskResult.Result")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToActionPermanent(IActionResult result)
-                 * {
-                 *  var callInfo = result.GetR4ActionResult();
-                 *  return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToActionPermanent(IActionResult result)
+                 //{
+                  //var callInfo = result.GetR4ActionResult();
+                  //return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+                 //}
+
                 .WithMethod("RedirectToActionPermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -185,12 +184,12 @@ namespace R4Mvc.Tools.Services
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToActionPermanent(Task<IActionResult> taskResult)
-                 * {
-                 *  return RedirectToActionPermanent(taskResult.Result);
-                 * }
-                */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToActionPermanent(Task<IActionResult> taskResult)
+                 //{
+                  //return RedirectToActionPermanent(taskResult.Result);
+                 //}
+
                 .WithMethod("RedirectToActionPermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -198,13 +197,13 @@ namespace R4Mvc.Tools.Services
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToActionPermanent", "taskResult.Result")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToPage(IActionResult result)
-                 * {
-                 *  var callInfo = result.GetR4ActionResult();
-                 *  return RedirectToRoute(callInfo.RouteValueDictionary);
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToPage(IActionResult result)
+                 //{
+                  //var callInfo = result.GetR4ActionResult();
+                  //return RedirectToRoute(callInfo.RouteValueDictionary);
+                 //}
+
                 .WithMethod("RedirectToPage", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -213,12 +212,12 @@ namespace R4Mvc.Tools.Services
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoute", "callInfo.RouteValueDictionary")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToPage(Task<IActionResult> taskResult)
-                 * {
-                 *  return RedirectToPage(taskResult.Result);
-                 * }
-                */
+                  //[GeneratedCode, DebuggerNonUserCode]
+                  //protected RedirectToRouteResult RedirectToPage(Task<IActionResult> taskResult)
+                  //{
+                   //return RedirectToPage(taskResult.Result);
+                  //}
+
                 .WithMethod("RedirectToPage", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -226,13 +225,13 @@ namespace R4Mvc.Tools.Services
                     .WithBody(b => b
                         .ReturnMethodCall(null, "RedirectToPage", "taskResult.Result")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToPagePermanent(IActionResult result)
-                 * {
-                 *  var callInfo = result.GetR4ActionResult();
-                 *  return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-                 * }
-                 */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToPagePermanent(IActionResult result)
+                 //{
+                  //var callInfo = result.GetR4ActionResult();
+                  //return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+                 //}
+
                 .WithMethod("RedirectToPagePermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -241,12 +240,12 @@ namespace R4Mvc.Tools.Services
                         .VariableFromMethodCall("callInfo", "result", "GetR4ActionResult")
                         .ReturnMethodCall(null, "RedirectToRoutePermanent", "callInfo.RouteValueDictionary")))
 
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * protected RedirectToRouteResult RedirectToPagePermanent(Task<IActionResult> taskResult)
-                 * {
-                 *  return RedirectToPagePermanent(taskResult.Result);
-                 * }
-                */
+                 //[GeneratedCode, DebuggerNonUserCode]
+                 //protected RedirectToRouteResult RedirectToPagePermanent(Task<IActionResult> taskResult)
+                 //{
+                  //return RedirectToPagePermanent(taskResult.Result);
+                 //}
+
                 .WithMethod("RedirectToPagePermanent", "RedirectToRouteResult", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -282,12 +281,12 @@ namespace R4Mvc.Tools.Services
                 else
                     handlerKey = "null";
                 genControllerClass
-                    /* [GeneratedCode, DebuggerNonUserCode]
-                     * public virtual IActionResult {method.Key}()
-                     * {
-                     *  return new R4Mvc_Microsoft_AspNetCore_Mvc_RazorPages_ActionResult(Name, HandlerNames.{Handler});
-                     * }
-                     */
+                     //[GeneratedCode, DebuggerNonUserCode]
+                     //public virtual IActionResult {method.Key}()
+                     //{
+                      //return new R4Mvc_Microsoft_AspNetCore_Mvc_RazorPages_ActionResult(Name, HandlerNames.{Handler});
+                     //}
+                     
                     .WithMethod(method.Key, "IActionResult", m => m
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.VirtualKeyword)
                         .WithNonActionAttribute()
@@ -347,9 +346,9 @@ namespace R4Mvc.Tools.Services
                     handlerKey = "null";
 
                 classBuilder
-                    /* [NonAction]
-                     * partial void {action}Override({ActionResultType} callInfo, [� params]);
-                     */
+                     //[NonAction]
+                     //partial void {action}Override({ActionResultType} callInfo, [� params]);
+
                     .WithMethod(method.Name + overrideMethodSuffix, null, m => m
                         .WithModifiers(SyntaxKind.PartialKeyword)
                         .WithNonActionAttribute()
@@ -357,15 +356,15 @@ namespace R4Mvc.Tools.Services
                         .ForEach(method.Parameters, (m2, p) => m2
                             .WithParameter(p.Name, p.Type.ToString()))
                         .WithNoBody())
-                    /* [NonAction]
-                     * public overrive {ActionResultType} {action}([� params])
-                     * {
-                     *  var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_RazorPages_ActionResult(Name, HandlerNames.{Handler});
-                     *  ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "paramName", paramName);
-                     *  {Action}Override(callInfo, {parameters});
-                     *  return callInfo;
-                     * }
-                     */
+                     //[NonAction]
+                     //public overrive {ActionResultType} {action}([� params])
+                     //{
+                      //var callInfo = new R4Mvc_Microsoft_AspNetCore_Mvc_RazorPages_ActionResult(Name, HandlerNames.{Handler});
+                      //ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "paramName", paramName);
+                      //{Action}Override(callInfo, {parameters});
+                      //return callInfo;
+                     //}
+
                     .WithMethod(method.Name, method.ReturnType.ToString(), m => m
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.OverrideKeyword)
                         .WithNonActionAttribute()
@@ -398,20 +397,20 @@ namespace R4Mvc.Tools.Services
             var subpathViews = viewFiles.Where(c => c.TemplateKind != null && c.TemplateKind != "EditorTemplates" && c.TemplateKind != "DisplayTemplates")
                 .OrderBy(v => v.TemplateKind);
 
-            /* public class ViewsClass
-             * {
-             * [...] */
+            //public class ViewsClass
+            // {
+            // [...] 
             classBuilder.WithChildClass("ViewsClass", cb => cb
                 .WithModifiers(SyntaxKind.PublicKeyword)
                 .WithGeneratedNonUserCodeAttributes()
                 // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
                 // public _ViewNamesClass ViewNames => s_ViewNames;
                 .WithStaticFieldBackedProperty("ViewNames", ViewNamesClassName, SyntaxKind.PublicKeyword)
-                /* public class _ViewNamesClass
-                 * {
-                 *  public readonly string {view} = "{view}";
-                 * }
-                 */
+                 //public class _ViewNamesClass
+                 //{
+                 // public readonly string {view} = "{view}";
+                 //}
+
                 .WithChildClass(ViewNamesClassName, vnc => vnc
                     .WithModifiers(SyntaxKind.PublicKeyword)
                     .ForEach(viewFiles.Where(c => c.TemplateKind == null), (vc, v) => vc
@@ -423,11 +422,11 @@ namespace R4Mvc.Tools.Services
                     // static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
                     // public _DisplayTemplatesClass DisplayTemplates => s_DisplayTemplates;
                     .WithStaticFieldBackedProperty(g.Key, $"_{g.Key}Class", SyntaxKind.PublicKeyword)
-                    /* public partial _DisplayTemplatesClass
-                     * {
-                     *  public readonly string {view} = "{view}";
-                     * }
-                     */
+                     //public partial _DisplayTemplatesClass
+                     //{
+                     // public readonly string {view} = "{view}";
+                     //}
+                     
                     .WithChildClass($"_{g.Key}Class", tc => tc
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
                         .ForEach(g, (tcc, v) => tcc
@@ -436,19 +435,19 @@ namespace R4Mvc.Tools.Services
                     // static readonly _{viewFolder}Class s_{viewFolder} = new _{viewFolder}Class();
                     // public _{viewFolder}Class {viewFolder} => s_{viewFolder};
                     .WithStaticFieldBackedProperty(g.Key, $"_{g.Key}Class", SyntaxKind.PublicKeyword)
-                    /* public class _{viewFolder}Class
-                     * {
-                     * [...] */
+                     //public class _{viewFolder}Class
+                     //{
+                     //[...] 
                     .WithChildClass($"_{g.Key}Class", tc => tc
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
                         // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
                         // public _ViewNamesClass ViewNames => s_ViewNames;
                         .WithStaticFieldBackedProperty("ViewNames", ViewNamesClassName, SyntaxKind.PublicKeyword)
-                        /* public class _ViewNamesClass
-                         * {
-                         *  public readonly string {view} = "{view}";
-                         * }
-                         */
+                         //public class _ViewNamesClass
+                         //* {
+                         //*  public readonly string {view} = "{view}";
+                         //* }
+
                         .WithChildClass(ViewNamesClassName, vnc => vnc
                             .WithModifiers(SyntaxKind.PublicKeyword)
                             .ForEach(g, (vc, v) => vc
@@ -462,3 +461,4 @@ namespace R4Mvc.Tools.Services
         }
     }
 }
+*/

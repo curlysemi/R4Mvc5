@@ -14,7 +14,7 @@ namespace R4Mvc.Tools.Services
     {
         private readonly IControllerRewriterService _controllerRewriter;
         private readonly IControllerGeneratorService _controllerGenerator;
-        private readonly IPageGeneratorService _pageGenerator;
+        //private readonly IPageGeneratorService _pageGenerator;
         private readonly IStaticFileGeneratorService _staticFileGenerator;
         private readonly IFilePersistService _filePersistService;
         private readonly Settings _settings;
@@ -22,20 +22,20 @@ namespace R4Mvc.Tools.Services
         public R4MvcGeneratorService(
             IControllerRewriterService controllerRewriter,
             IControllerGeneratorService controllerGenerator,
-            IPageGeneratorService pageGenerator,
+            //IPageGeneratorService pageGenerator,
             IStaticFileGeneratorService staticFileGenerator,
             IFilePersistService filePersistService,
             Settings settings)
         {
             _controllerRewriter = controllerRewriter;
             _controllerGenerator = controllerGenerator;
-            _pageGenerator = pageGenerator;
+            //_pageGenerator = pageGenerator;
             _staticFileGenerator = staticFileGenerator;
             _filePersistService = filePersistService;
             _settings = settings;
         }
 
-        public void Generate(string projectRoot, IList<ControllerDefinition> controllers, IList<PageView> pages, bool hasPagesSupport)
+        public void Generate(string projectRoot, IList<ControllerDefinition> controllers, /*IList<PageView> pages,*/ bool hasPagesSupport)
         {
             var areaControllers = controllers.ToLookup(c => c.Area);
 
@@ -67,6 +67,7 @@ namespace R4Mvc.Tools.Services
                     generatedControllers.Add(namespaceNode);
             }
 
+            /*
             var generatedPages = new List<NamespaceDeclarationSyntax>();
             foreach (var namespaceGroup in pages.GroupBy(p => p.Definition?.Namespace ?? _settings.R4MvcNamespace).OrderBy(p => p.Key))
             {
@@ -116,17 +117,18 @@ namespace R4Mvc.Tools.Services
                 if (namespaceNode.Members.Count > 0)
                     generatedPages.Add(namespaceNode);
             }
+            */
 
             // R4MVC namespace used for the areas and Dummy class
             var r4Namespace = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace))
-                // add the dummy class uses in the derived controller partial class
-                /* [GeneratedCode, DebuggerNonUserCode]
-                 * public class Dummy
-                 * {
-                 *  private Dummy() {}
-                 *  public static Dummy Instance = new Dummy();
-                 * }
-                 */
+                 // add the dummy class uses in the derived controller partial class
+                 /* [GeneratedCode, DebuggerNonUserCode]
+                  * public class Dummy
+                  * {
+                  *  private Dummy() {}
+                  *  public static Dummy Instance = new Dummy();
+                  * }
+                  */
                  .AddMembers(new ClassBuilder(Constants.DummyClass)
                     .WithModifiers(SyntaxKind.PublicKeyword)
                     .WithGeneratedNonUserCodeAttributes()
@@ -135,8 +137,8 @@ namespace R4Mvc.Tools.Services
                     .WithField(Constants.DummyClassInstance, Constants.DummyClass, Constants.DummyClass, SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword)
                     .Build())
                 .AddMembers(CreateViewOnlyControllerClasses(controllers).ToArray<MemberDeclarationSyntax>())
-                .AddMembers(CreateAreaClasses(areaControllers).ToArray<MemberDeclarationSyntax>())
-                .AddMembers(CreatePagePathClasses(pages, out var topLevelPagePaths).ToArray<MemberDeclarationSyntax>());
+                .AddMembers(CreateAreaClasses(areaControllers).ToArray<MemberDeclarationSyntax>());
+                //.AddMembers(CreatePagePathClasses(pages, out var topLevelPagePaths).ToArray<MemberDeclarationSyntax>());
 
             // create static MVC class and add the area and controller fields
             var mvcStaticClass = new ClassBuilder(_settings.HelpersPrefix)
@@ -155,22 +157,22 @@ namespace R4Mvc.Tools.Services
                     SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.ReadOnlyKeyword);
             }
 
-            var mvcPagesStaticClass = new ClassBuilder(_settings.PageHelpersPrefix)
-                .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.PartialKeyword)
-                .WithGeneratedNonUserCodeAttributes();
-            if (topLevelPagePaths != null)
-                foreach (var set in topLevelPagePaths)
-                {
-                    mvcPagesStaticClass.WithStaticFieldBackedProperty(set.Key, set.Value, SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword);
-                }
-            foreach (var page in pages.Where(p => p.Segments.Length == 0))
-            {
-                mvcPagesStaticClass.WithField(
-                    page.Name,
-                    page.Definition.FullyQualifiedGeneratedName,
-                    page.Definition.FullyQualifiedR4ClassName ?? page.Definition.FullyQualifiedGeneratedName,
-                    SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.ReadOnlyKeyword);
-            }
+            //var mvcPagesStaticClass = new ClassBuilder(_settings.PageHelpersPrefix)
+            //    .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.PartialKeyword)
+            //    .WithGeneratedNonUserCodeAttributes();
+            //if (topLevelPagePaths != null)
+            //    foreach (var set in topLevelPagePaths)
+            //    {
+            //        mvcPagesStaticClass.WithStaticFieldBackedProperty(set.Key, set.Value, SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword);
+            //    }
+            //foreach (var page in pages.Where(p => p.Segments.Length == 0))
+            //{
+            //    mvcPagesStaticClass.WithField(
+            //        page.Name,
+            //        page.Definition.FullyQualifiedGeneratedName,
+            //        page.Definition.FullyQualifiedR4ClassName ?? page.Definition.FullyQualifiedGeneratedName,
+            //        SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.ReadOnlyKeyword);
+            //}
 
             // Generate a list of all static files from the wwwroot path
             var staticFileNode = _staticFileGenerator.GenerateStaticFiles(projectRoot);
@@ -178,7 +180,7 @@ namespace R4Mvc.Tools.Services
             var r4MvcFile = new CodeFileBuilder(_settings, true)
                     .WithMembers(
                         mvcStaticClass.Build(),
-                        mvcPagesStaticClass.Build(),
+                        //mvcPagesStaticClass.Build(),
                         r4Namespace,
                         staticFileNode,
                         R4MvcHelpersClass(),
@@ -197,8 +199,8 @@ namespace R4Mvc.Tools.Services
                         PageRedirectResultClass(),
                         PageRedirectToActionResultClass(),
                         PageRedirectToRouteResultClass())
-                    .WithNamespaces(generatedControllers)
-                    .WithNamespaces(generatedPages);
+                    .WithNamespaces(generatedControllers);
+                    //.WithNamespaces(generatedPages);
             Console.WriteLine("Generating " + Path.DirectorySeparatorChar + Constants.R4MvcGeneratedFileName);
             _filePersistService.WriteFile(r4MvcFile.Build(), Path.Combine(projectRoot, Constants.R4MvcGeneratedFileName));
         }
@@ -220,6 +222,7 @@ namespace R4Mvc.Tools.Services
             }
         }
 
+        /*
         public ClassDeclarationSyntax CreateViewOnlyPageClass(PageView page)
         {
             var generatedPath = page.FilePath + ".cs";
@@ -235,6 +238,7 @@ namespace R4Mvc.Tools.Services
                 _pageGenerator.WithViewsClass(pageClass, new[] { page });
             return pageClass.Build();
         }
+        */
 
         public IEnumerable<ClassDeclarationSyntax> CreateAreaClasses(ILookup<string, ControllerDefinition> areaControllers)
         {

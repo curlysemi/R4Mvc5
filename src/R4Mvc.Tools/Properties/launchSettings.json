@@ -2,8 +2,8 @@
   "profiles": {
     "R4Mvc.Tools": {
       "commandName": "Project",
+      "commandLineArgs": "generate -p \"C:\\Users\\Me\\Documents\\Code\\T4MVCCoreLite\\samples\\TestMvc5Application\\TestMvc5Application.csproj\"",
       "commandLineArgs_blank": "",
-      "commandLineArgs": "generate -p \"..\\..\\..\\..\\..\\samples\\AspNetSimple\\AspNetSimple.csproj\"",
       "commandLineArgs_aspNetFeatureFolders": "generate -p \"..\\..\\..\\..\\..\\samples\\AspNetFeatureFolders\\AspNetFeatureFolders.csproj\""
     }
   }
