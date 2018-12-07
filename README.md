@@ -20,9 +20,9 @@ and that's just the beginning!
 
 
 ## Example
-(Assuming you're in a shell while this repo's directory)
+(Assuming you're in a shell while in this repo's directory)
 ```CMD
-.\src\R4Mvc.Tools\bin\Debug\net461\R4Mvc.Tools.exe generate -p 'C:\Users\Me\Code\SomeMvc5Project\SomeMvc5Project.csproj'
+.\src\R4Mvc.Tools\bin\Debug\net461\R4Mvc5.exe generate -p 'C:\Users\Me\Code\SomeMvc5Project\SomeMvc5Project.csproj'
 ```
 You should see some output like the following:
 ```CMD
@@ -37,8 +37,8 @@ Loading project ...
 Compiling project ...
 Detected MVC version: 5.2.4.0
 
-Processing controller TestMvc5Application.Controllers.HomeController
-Processing controller TestMvc5Application.Controllers.UserController
+Processing controller SomeMvc5Project.Controllers.HomeController
+Processing controller SomeMvc5Project.Controllers.UserController
 
 Generating \HomeController.generated.cs
 Generating \UserController.generated.cs
