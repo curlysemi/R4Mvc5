@@ -1,0 +1,33 @@
+﻿@model TestMvc5Application.Models.User.UserDetails
+@{
+    ViewBag.Title = "User Details";
+}
+
+<ul>
+    <li>
+        @Html.ActionLink("Back to Index (T4MVC)", MVC.Home.Index())
+    </li>
+</ul>
+
+<h2>User Details for @Model.Name, ID# @Model.UserID</h2>
+
+@using (Html.BeginForm(MVC.User.Details(), FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <h3>Form Values (T4MVC)</h3>
+    <div>
+        <div>
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.UserID)
+                @Html.TextBoxFor(x => x.UserID)
+            </div>
+            <div>
+                <input type="submit" value="Go!" />
+            </div>
+        </div>
+    </div>
+}
