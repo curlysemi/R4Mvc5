@@ -18,7 +18,7 @@ namespace R4Mvc.Tools
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine($"  R4Mvc Generator Tool v{GetVersion()}");
+            Console.WriteLine($"  R4Mvc5 Generator Tool v{GetVersion()}");
             Console.WriteLine();
 
             var commandLineConfig = BuildCommandLineConfig(ref args);
