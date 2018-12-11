@@ -34,6 +34,27 @@ namespace T4MVC
 
         public static Dummy Instance = new Dummy();
     }
+
+    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    public partial class SharedController
+    {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames => s_ViewNames;
+            public class _ViewNamesClass
+            {
+                public readonly string Error = "Error";
+                public readonly string _Layout = "_Layout";
+            }
+
+            public readonly string Error = "~/Views/Shared/Error.cshtml";
+            public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+
+        static readonly ViewsClass s_Views = new ViewsClass();
+        public ViewsClass Views => s_Views;
+    }
 }
 
 [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
@@ -85,6 +106,255 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : ActionResult, IT4MVCA
 
     public override void ExecuteResult(ControllerContext context)
     {
+    }
+}
+
+namespace TestMvc5Application.Controllers
+{
+    public partial class HomeController
+    {
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public HomeController()
+        {
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected HomeController(Dummy d)
+        {
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoute(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public HomeController Actions => MVC.Home;
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public readonly string Area = "";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public readonly string Name = "Home";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public const string NameConst = "Home";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public ActionNamesClass ActionNames => s_ActionNames;
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ActionNamesClass
+        {
+            public readonly string Index = "Index";
+            public readonly string About = "About";
+            public readonly string Contact = "Contact";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ActionNameConstants
+        {
+            public const string Index = "Index";
+            public const string About = "About";
+            public const string Contact = "Contact";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames => s_ViewNames;
+            public class _ViewNamesClass
+            {
+                public readonly string About = "About";
+                public readonly string Contact = "Contact";
+                public readonly string Index = "Index";
+            }
+
+            public readonly string About = "~/Views/Home/About.cshtml";
+            public readonly string Contact = "~/Views/Home/Contact.cshtml";
+            public readonly string Index = "~/Views/Home/Index.cshtml";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0")]
+        static readonly ViewsClass s_Views = new ViewsClass();
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public ViewsClass Views => s_Views;
+    }
+
+    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    public partial class T4MVC_HomeController : TestMvc5Application.Controllers.HomeController
+    {
+        public T4MVC_HomeController(): base(Dummy.Instance)
+        {
+        }
+
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AboutOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override System.Web.Mvc.ActionResult About()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.About);
+            AboutOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ContactOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Contact()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Contact);
+            ContactOverride(callInfo);
+            return callInfo;
+        }
+    }
+
+    public partial class UserController
+    {
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public UserController()
+        {
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected UserController(Dummy d)
+        {
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoute(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
+        [NonAction]
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public virtual ActionResult Details()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public UserController Actions => MVC.User;
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public readonly string Area = "";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public readonly string Name = "User";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        public const string NameConst = "User";
+        [GeneratedCode("R4Mvc5", "1.0")]
+        static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public ActionNamesClass ActionNames => s_ActionNames;
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ActionNamesClass
+        {
+            public readonly string Details = "Details";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ActionNameConstants
+        {
+            public const string Details = "Details";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames => s_ViewNames;
+            public class _ViewNamesClass
+            {
+                public readonly string Details = "Details";
+            }
+
+            public readonly string Details = "~/Views/User/Details.cshtml";
+        }
+
+        [GeneratedCode("R4Mvc5", "1.0")]
+        static readonly ViewsClass s_Views = new ViewsClass();
+        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        public ViewsClass Views => s_Views;
+    }
+
+    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    public partial class T4MVC_UserController : TestMvc5Application.Controllers.UserController
+    {
+        public T4MVC_UserController(): base(Dummy.Instance)
+        {
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, string name);
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Details(int id, string name)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
+            DetailsOverride(callInfo, id, name);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, TestMvc5Application.Models.User.UserDetails model);
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Details(TestMvc5Application.Models.User.UserDetails model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            DetailsOverride(callInfo, model);
+            return callInfo;
+        }
     }
 }
 #pragma warning restore 1591, 3008, 3009, 0108

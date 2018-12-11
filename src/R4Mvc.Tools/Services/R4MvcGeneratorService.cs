@@ -120,16 +120,6 @@ namespace R4Mvc.Tools.Services
             }
             */
 
-            var viewOnlyControllers = CreateViewOnlyControllerClasses_WithNames(controllers);//.ToArray<MemberDeclarationSyntax>();
-            var viewOnlyControllersWithNamespaces = new Dictionary<string, NamespaceDeclarationSyntax>();
-            if (viewOnlyControllers?.Any() == true)
-            {
-                foreach (var kvp in viewOnlyControllers)
-                {
-                    viewOnlyControllersWithNamespaces[kvp.Key] = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace)).AddMembers(kvp.Value);
-                }
-            }
-
             // R4MVC namespace used for the areas and Dummy class
             var r4Namespace = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace))
                  // add the dummy class uses in the derived controller partial class
@@ -149,6 +139,36 @@ namespace R4Mvc.Tools.Services
                     .Build())
                 .AddMembers(CreateAreaClasses(areaControllers).ToArray<MemberDeclarationSyntax>()); // TODO: No idea if this needs to be different — IIRC, none of our apps use area?
                 //.AddMembers(CreatePagePathClasses(pages, out var topLevelPagePaths).ToArray<MemberDeclarationSyntax>());
+
+            var viewOnlyControllers = CreateViewOnlyControllerClasses_WithNames(controllers);//.ToArray<MemberDeclarationSyntax>();
+            if (_settings.SplitIntoMultipleFiles)
+            {
+                var viewOnlyControllersWithNamespaces = new Dictionary<string, NamespaceDeclarationSyntax>();
+                if (viewOnlyControllers?.Any() == true)
+                {
+                    foreach (var kvp in viewOnlyControllers)
+                    {
+                        viewOnlyControllersWithNamespaces[kvp.Key] = NamespaceDeclaration(ParseName(_settings.R4MvcNamespace)).AddMembers(kvp.Value);
+                    }
+                }
+
+                if (viewOnlyControllersWithNamespaces?.Any() == true)
+                {
+                    foreach (var kvp in viewOnlyControllersWithNamespaces)
+                    {
+                        var fileName = $"{kvp.Key}.generated.cs";
+                        var file = new CodeFileBuilder(_settings, true)
+                            .WithMembers(kvp.Value);
+
+                        Console.WriteLine("Generating " + Path.DirectorySeparatorChar + fileName);
+                        _filePersistService.WriteFile(file.Build(), Path.Combine(projectRoot, fileName));
+                    }
+                }
+            }
+            else
+            {
+                r4Namespace = r4Namespace.AddMembers(viewOnlyControllers.Values.ToArray());
+            }
 
             // create static MVC class and add the area and controller fields
             var mvcStaticClass = new ClassBuilder(_settings.HelpersPrefix)
@@ -183,19 +203,6 @@ namespace R4Mvc.Tools.Services
             //        page.Definition.FullyQualifiedR4ClassName ?? page.Definition.FullyQualifiedGeneratedName,
             //        SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.ReadOnlyKeyword);
             //}
-
-            if (viewOnlyControllersWithNamespaces?.Any() == true)
-            {
-                foreach (var kvp in viewOnlyControllersWithNamespaces)
-                {
-                    var fileName = $"{kvp.Key}.generated.cs";
-                    var file = new CodeFileBuilder(_settings, true)
-                        .WithMembers(kvp.Value);
-
-                    Console.WriteLine("Generating " + Path.DirectorySeparatorChar + fileName);
-                    _filePersistService.WriteFile(file.Build(), Path.Combine(projectRoot, fileName));
-                }
-            }
 
             // Generate a list of all static files from the wwwroot path
             var staticFileNode = _staticFileGenerator.GenerateStaticFiles(projectRoot);

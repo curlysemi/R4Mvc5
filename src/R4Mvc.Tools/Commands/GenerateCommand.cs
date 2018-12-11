@@ -158,6 +158,7 @@ project-path:
                 // Cleanup old generated files
                 var newGeneratedFiles = Directory.GetFiles(projectRoot, "*.generated.cs", SearchOption.AllDirectories);
                 var notGeneratedFromThisExecution = oldGeneratedFiles.Where(f => !newGeneratedFiles.Contains(f));
+                var generatedFromThisExecution = newGeneratedFiles.Where(f => !oldGeneratedFiles.Contains(f));
                 foreach (var file in notGeneratedFromThisExecution)
                 {
                     if (File.Exists(file.Replace(".generated.cs", ".cs")) ||
@@ -172,7 +173,20 @@ project-path:
                             File.Delete(file);
                         }
                     }
+
+                    // TODO: remove files no longer generated from the project file
                 }
+
+                //// Add newly generated files to the project file
+                //if (workspace.CanApplyChange(Microsoft.CodeAnalysis.ApplyChangesKind.AddDocument))
+                //{
+                //    foreach (var file in generatedFromThisExecution)
+                //    {
+                //        var document = project.AddDocument(file, "<DependentUpon>T4MVC.tt</DependentUpon>");
+                //        workspace.TryApplyChanges(document.Project.Solution);
+                        
+                //    }
+                //}
 
                 sw.Stop();
                 Console.WriteLine();
