@@ -8,8 +8,8 @@
         internal const string GetR4ActionResult = "GetT4MVCResult";
         internal const string IR4MvcActionResult = "IT4MVCActionResult";
 
-        internal const string R4MvcFileName = "T4MVCExt.cs";
-        internal const string R4MvcGeneratedFileName = "T4MVC.cs";
+        internal const string R4MvcFileName = "T4MVC.cs";
+        internal const string R4MvcGeneratedFileName = "T4MVC.generated.cs";
         internal const string R4MvcSettingsFileName = "r4mvc.json";
 
         internal const string DummyClass = "Dummy";
@@ -23,6 +23,8 @@
         internal const string ActionResultClass = PrefixName + ActionResultNamespace + "ActionResult";
         internal const string JsonResultClass = PrefixName + ActionResultNamespace + "JsonResult";
         internal const string ContentResultClass = PrefixName + ActionResultNamespace + "ContentResult";
+        internal const string ViewResultClass = PrefixName + ActionResultNamespace + "ViewResult";
+        internal const string PartialViewResultClass = PrefixName + ActionResultNamespace + "PartialViewResult";
         internal const string FileResultClass = PrefixName + ActionResultNamespace + "FileResult";
         internal const string RedirectResultClass = PrefixName + ActionResultNamespace + "RedirectResult";
         internal const string RedirectToActionResultClass = PrefixName + ActionResultNamespace + "RedirectToActionResult";

@@ -2,7 +2,7 @@
 
 namespace TestMvc5Application.Controllers
 {
-    public partial class HomeController : Controller
+    public partial class HomeController : ControllerBase
     {
         public virtual ActionResult Index()
         {

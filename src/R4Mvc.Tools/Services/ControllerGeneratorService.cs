@@ -13,7 +13,7 @@ using R4Mvc.Tools.CodeGen;
 using R4Mvc.Tools.Extensions;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using static R4Mvc.Tools.Extensions.SyntaxNodeHelpers;
-
+using System;
 
 namespace R4Mvc.Tools.Services
 {
@@ -63,6 +63,19 @@ namespace R4Mvc.Tools.Services
             return string.Empty;
         }
 
+        private IEnumerable<T> PoorMansDistinctBy<T, U>(IEnumerable<T> collection, Func<T, U> selector) where U : class
+        {
+            var distinct = new List<T>();
+            foreach (var element in collection)
+            {
+                if (!distinct.Any(m => selector(m) == selector(element)))
+                {
+                    distinct.Add(element);
+                }
+            }
+            return distinct;
+        }
+
         public ClassDeclarationSyntax GeneratePartialController(ControllerDefinition controller, bool supportsPages)
         {
             // build controller partial class node
@@ -97,7 +110,8 @@ namespace R4Mvc.Tools.Services
             var actionsExpression = controller.AreaKey != null
                 ? _settings.HelpersPrefix + "." + controller.AreaKey + "." + controller.Name
                 : _settings.HelpersPrefix + "." + controller.Name;
-            var controllerMethodNames = SyntaxNodeHelpers.GetPublicNonGeneratedControllerMethods(controller.Symbol).Select(m => m.Name).Distinct().ToArray();
+            var controllerMethods = SyntaxNodeHelpers.GetPublicNonGeneratedControllerMethods(controller.Symbol);
+            var controllerMethodNames = controllerMethods.Select(m => m.Name).Distinct().ToArray();
             genControllerClass
                 .WithExpressionProperty("Actions", controller.Symbol.Name, actionsExpression, SyntaxKind.PublicKeyword)
                 .WithStringField("Area", controller.Area, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)
@@ -126,6 +140,33 @@ namespace R4Mvc.Tools.Services
                     .WithGeneratedNonUserCodeAttributes()
                     .ForEach(controllerMethodNames, (c, m) => c
                         .WithStringField(m, m, SyntaxKind.PublicKeyword, SyntaxKind.ConstKeyword)));
+
+
+            //var distinctControllerMethods = new List<IMethodSymbol>();
+            //foreach (var controllerMethod in controllerMethods)
+            //{
+            //    if (!distinctControllerMethods.Any(m => m.Name == controllerMethod.Name)) {
+            //        distinctControllerMethods.Add(controllerMethod);
+            //    }
+            //}
+            var distinctControllerMethods = PoorMansDistinctBy(controllerMethods, m => m.Name);
+            foreach (var controllerMethod in distinctControllerMethods)
+            {
+                var allMethodsOfName = controllerMethods.Where(m => m.Name == controllerMethod.Name);
+                var allParams = PoorMansDistinctBy(allMethodsOfName.SelectMany(m => m.Parameters), m => m.Name);
+
+                var paramsClassName = $"ActionParamsClass_{controllerMethod.Name}";
+                genControllerClass
+                    .WithStaticFieldBackedProperty($"{controllerMethod.Name}Params", paramsClassName, SyntaxKind.PublicKeyword)
+                    .WithChildClass(paramsClassName, ac => ac
+                        .WithModifiers(SyntaxKind.PublicKeyword)
+                        .WithGeneratedNonUserCodeAttributes()
+                        .ForEach(allParams, (c, m) => c
+                            .WithStringField(SafeName(m.Name), SafeName(m.Name), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
+                    ;
+            }
+
+
             WithViewsClass(genControllerClass, controller.Views);
 
             return genControllerClass.Build();
@@ -295,6 +336,98 @@ namespace R4Mvc.Tools.Services
                             )));
         }
 
+        private static bool IsCSharpKeyword(string name)
+        {
+            switch (name)
+            {
+                case "bool":
+                case "byte":
+                case "sbyte":
+                case "short":
+                case "ushort":
+                case "int":
+                case "uint":
+                case "long":
+                case "ulong":
+                case "double":
+                case "float":
+                case "decimal":
+                case "string":
+                case "char":
+                case "object":
+                case "typeof":
+                case "sizeof":
+                case "null":
+                case "true":
+                case "false":
+                case "if":
+                case "else":
+                case "while":
+                case "for":
+                case "foreach":
+                case "do":
+                case "switch":
+                case "case":
+                case "default":
+                case "lock":
+                case "try":
+                case "throw":
+                case "catch":
+                case "finally":
+                case "goto":
+                case "break":
+                case "continue":
+                case "return":
+                case "public":
+                case "private":
+                case "internal":
+                case "protected":
+                case "static":
+                case "readonly":
+                case "sealed":
+                case "const":
+                case "new":
+                case "override":
+                case "abstract":
+                case "virtual":
+                case "partial":
+                case "ref":
+                case "out":
+                case "in":
+                case "where":
+                case "params":
+                case "this":
+                case "base":
+                case "namespace":
+                case "using":
+                case "class":
+                case "struct":
+                case "interface":
+                case "delegate":
+                case "checked":
+                case "get":
+                case "set":
+                case "add":
+                case "remove":
+                case "operator":
+                case "implicit":
+                case "explicit":
+                case "fixed":
+                case "extern":
+                case "event":
+                case "enum":
+                case "unsafe":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private string SafeName(string name)
+        {
+            return IsCSharpKeyword(name) ? $"@{name}" : name;
+        } 
+
         private void AddMethodOverrides(ClassBuilder classBuilder, ITypeSymbol mvcSymbol, bool isControllerSecure)
         {
             const string overrideMethodSuffix = "Override";
@@ -320,6 +453,10 @@ namespace R4Mvc.Tools.Services
                     callInfoType = Constants.ContentResultClass;
                 else if (methodReturnType.InheritsFrom<FileResult>())
                     callInfoType = Constants.FileResultClass;
+                else if (methodReturnType.InheritsFrom<ViewResult>())
+                    callInfoType = Constants.ViewResultClass;
+                else if (methodReturnType.InheritsFrom<PartialViewResult>())
+                    callInfoType = Constants.PartialViewResultClass;
                 else if (methodReturnType.InheritsFrom<RedirectResult>())
                     callInfoType = Constants.RedirectResultClass;
                 //else if (methodReturnType.InheritsFrom<RedirectToActionResult>())
@@ -343,7 +480,7 @@ namespace R4Mvc.Tools.Services
                         .WithNonActionAttribute()
                         .WithParameter("callInfo", callInfoType)
                         .ForEach(method.Parameters, (m2, p) => m2
-                            .WithParameter(p.Name, p.Type.ToString()))
+                            .WithParameter(SafeName(p.Name), p.Type.ToString()))
                         .WithNoBody())
                     /* [NonAction]
                      * public overrive {ActionResultType} {action}([… params])
@@ -358,7 +495,7 @@ namespace R4Mvc.Tools.Services
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.OverrideKeyword)
                         .WithNonActionAttribute()
                         .ForEach(method.Parameters, (m2, p) => m2
-                            .WithParameter(p.Name, p.Type.ToString()))
+                            .WithParameter(SafeName(p.Name), p.Type.ToString()))
                         .WithBody(b => b
                             .VariableFromNewObject("callInfo", callInfoType,
                                 isControllerSecure || method.GetAttributes().Any(a => a.AttributeClass.InheritsFrom<RequireHttpsAttribute>())
@@ -366,8 +503,8 @@ namespace R4Mvc.Tools.Services
                                     : new object[] { "Area", "Name", "ActionNames." + method.Name }
                             )
                             .ForEach(method.Parameters, (cb, p) => cb
-                                .MethodCall("ModelUnbinderHelpers", "AddRouteValues", "callInfo.RouteValueDictionary", SimpleLiteral.String(p.Name), p.Name))
-                            .MethodCall(null, method.Name + overrideMethodSuffix, new[] { "callInfo" }.Concat(method.Parameters.Select(p => p.Name)).ToArray())
+                                .MethodCall("ModelUnbinderHelpers", "AddRouteValues", "callInfo.RouteValueDictionary", SimpleLiteral.String(SafeName(p.Name)), SafeName(p.Name)))
+                            .MethodCall(null, method.Name + overrideMethodSuffix, new[] { "callInfo" }.Concat(method.Parameters.Select(p => SafeName(p.Name))).ToArray())
                             .Statement(rb => isTaskResult
                                 ? rb.ReturnMethodCall(typeof(Task).FullName, "FromResult" + (isGenericTaskResult ? "<" + methodReturnType + ">" : null), "callInfo")
                                 : rb.ReturnVariable("callInfo"))

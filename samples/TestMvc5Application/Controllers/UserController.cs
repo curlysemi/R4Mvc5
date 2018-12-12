@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+using System;
+using System.Web.Mvc;
 using TestMvc5Application.Models.User;
 
 namespace TestMvc5Application.Controllers
@@ -20,6 +21,12 @@ namespace TestMvc5Application.Controllers
         public virtual ActionResult Details(UserDetails model)
         {
             return RedirectToAction(MVC.User.Details(model.UserID, model.Name));
+        }
+
+        [HttpGet]
+        public virtual ActionResult Stropping(string @default)
+        {
+            throw new NotImplementedException();
         }
     }
 }

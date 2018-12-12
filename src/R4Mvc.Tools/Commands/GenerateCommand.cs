@@ -97,6 +97,7 @@ project-path:
 
                 // Analyse the controllers in the project (updating them to be partial), as well as locate all the view files
                 var controllers = _controllerRewriter.RewriteControllers(compilation);
+                controllers = controllers.Where(c => (c.Symbol?.Name ?? string.Empty).EndsWith("Controller")).ToList();
                 var allViewFiles = _viewLocators.SelectMany(x => x.Find(projectRoot));
 
                 // Assign view files to controllers
@@ -150,10 +151,10 @@ project-path:
                 var r4MvcJsonFile = Path.Combine(projectRoot, Constants.R4MvcSettingsFileName);
                 File.WriteAllText(r4MvcJsonFile, JsonConvert.SerializeObject(_settings, Formatting.Indented));
 
-                // Ensuring a user customisable r4mvc.cs code file exists
-                var r4MvcFile = Path.Combine(projectRoot, Constants.R4MvcFileName);
-                if (!File.Exists(r4MvcFile))
-                    CreateR4MvcUserFile(r4MvcFile);
+                //// Ensuring a user customisable r4mvc.cs code file exists
+                //var r4MvcFile = Path.Combine(projectRoot, Constants.R4MvcFileName);
+                //if (!File.Exists(r4MvcFile))
+                //    CreateR4MvcUserFile(r4MvcFile);
 
                 // Cleanup old generated files
                 var newGeneratedFiles = Directory.GetFiles(projectRoot, "*.generated.cs", SearchOption.AllDirectories);

@@ -7,8 +7,8 @@ namespace R4Mvc.Tools.Locators
         public bool DirectoryExists(string path)
             => Directory.Exists(path);
 
-        public string[] GetDirectories(string parentPath)
-            => Directory.GetDirectories(parentPath);
+        public string[] GetDirectories(string parentPath, bool recurse = false)
+            => Directory.GetDirectories(parentPath, "*", recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
         public string[] GetFiles(string parentPath, string filter, bool recurse = false)
         {

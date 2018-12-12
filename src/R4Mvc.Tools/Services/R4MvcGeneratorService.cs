@@ -214,13 +214,15 @@ namespace R4Mvc.Tools.Services
                         r4Namespace,
                         staticFileNode,
                         R4MvcHelpersClass(),
-                        ActionResultClass()//,
-                        //JsonResultClass(),
-                        //ContentResultClass(),
-                        //FileResultClass(),
-                        //RedirectResultClass(),
+                        ActionResultClass(),
+                        ViewResultClass(),
+                        PartialViewResultClass(),
+                        JsonResultClass(),
+                        ContentResultClass(),
+                        FileResultClass(),
+                        RedirectResultClass(),
                         //RedirectToActionResultClass(),
-                        //RedirectToRouteResultClass()
+                        RedirectToRouteResultClass()
                         )
                     .WithMembers(hasPagesSupport,
                         PageActionResultClass(),
@@ -422,15 +424,24 @@ namespace R4Mvc.Tools.Services
                         .WithBody(b => Block())));
 
         public ClassDeclarationSyntax JsonResultClass()
-            => IActionResultDerivedClass(Constants.JsonResultClass, "JsonResult",
-                c => c.WithBaseConstructorCall(SimpleLiteral.Null));                           // ctor : base(null)
+            => IActionResultDerivedClass(Constants.JsonResultClass, "JsonResult");
+
+        public ClassDeclarationSyntax ViewResultClass()
+            => IActionResultDerivedClass(Constants.ViewResultClass, "ViewResult");
+
+        public ClassDeclarationSyntax PartialViewResultClass()
+            => IActionResultDerivedClass(Constants.PartialViewResultClass, "PartialViewResult");
 
         public ClassDeclarationSyntax ContentResultClass()
             => IActionResultDerivedClass(Constants.ContentResultClass, "ContentResult");
 
         public ClassDeclarationSyntax FileResultClass()
             => IActionResultDerivedClass(Constants.FileResultClass, "FileResult",
-                c => c.WithBaseConstructorCall(SimpleLiteral.Null));                           // ctor : base(null)
+                c => c.WithBaseConstructorCall(SimpleLiteral.Null), anyOtherStuff: // ctor : base(null)
+                r => r.WithMethod("WriteFile", "void", m => m
+                    .WithModifiers(SyntaxKind.ProtectedKeyword, SyntaxKind.OverrideKeyword)
+                        .WithParameter("response", "HttpResponseBase")
+                        .WithBody(b => Block())));
 
         public ClassDeclarationSyntax RedirectResultClass()
             => IActionResultDerivedClass(Constants.RedirectResultClass, "RedirectResult",
