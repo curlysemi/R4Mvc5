@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace R4Mvc.Tools
 {
@@ -27,5 +28,9 @@ namespace R4Mvc.Tools
         public PageDefinition Definition { get; set; }
 
         public string TemplateKind => null;
+
+        public Dictionary<string, IEnumerable<IView>> SubFolders { get; set; }
+
+        public bool IsHackyDirectory => false;
     }
 }

@@ -19,12 +19,8 @@ using T4MVC;
 public static partial class MVC
 {
     public static readonly TestMvc5Application.Controllers.HomeController Home = new TestMvc5Application.Controllers.T4MVC_HomeController();
-    public static readonly TestMvc5Application.Controllers.T4MVC_HomeController T4MVC_Home = new TestMvc5Application.Controllers.T4MVC_T4MVC_HomeController();
-    public static readonly TestMvc5Application.Controllers.T4MVC_UserController T4MVC_User = new TestMvc5Application.Controllers.T4MVC_T4MVC_UserController();
     public static readonly TestMvc5Application.Controllers.UserController User = new TestMvc5Application.Controllers.T4MVC_UserController();
-    public static readonly T4MVC.MoreController More = new T4MVC.MoreController();
     public static readonly T4MVC.SharedController Shared = new T4MVC.SharedController();
-    public static readonly T4MVC.StuffController Stuff = new T4MVC.StuffController();
 }
 
 namespace T4MVC
@@ -37,25 +33,6 @@ namespace T4MVC
         }
 
         public static Dummy Instance = new Dummy();
-    }
-
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-    public partial class MoreController
-    {
-        public class ViewsClass
-        {
-            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-            public _ViewNamesClass ViewNames => s_ViewNames;
-            public class _ViewNamesClass
-            {
-                public readonly string LamePage = "LamePage";
-            }
-
-            public readonly string LamePage = "~/Views/Home/Stuff/More/LamePage.cshtml";
-        }
-
-        static readonly ViewsClass s_Views = new ViewsClass();
-        public ViewsClass Views => s_Views;
     }
 
     [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
@@ -73,38 +50,6 @@ namespace T4MVC
 
             public readonly string Error = "~/Views/Shared/Error.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
-        }
-
-        static readonly ViewsClass s_Views = new ViewsClass();
-        public ViewsClass Views => s_Views;
-    }
-
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-    public partial class StuffController
-    {
-        public class ViewsClass
-        {
-            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-            public _ViewNamesClass ViewNames => s_ViewNames;
-            public class _ViewNamesClass
-            {
-                public readonly string CoolPage = "CoolPage";
-            }
-
-            public readonly string CoolPage = "~/Views/Home/Stuff/CoolPage.cshtml";
-            static readonly _MoreClass s_More = new _MoreClass();
-            public _MoreClass More => s_More;
-            public partial class _MoreClass
-            {
-                static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-                public _ViewNamesClass ViewNames => s_ViewNames;
-                public class _ViewNamesClass
-                {
-                    public readonly string LamePage = "LamePage";
-                }
-
-                public readonly string LamePage = "~/Views/Home/Stuff/More/LamePage.cshtml";
-            }
         }
 
         static readonly ViewsClass s_Views = new ViewsClass();
@@ -509,18 +454,18 @@ namespace TestMvc5Application.Controllers
             public readonly string About = "~/Views/Home/About.cshtml";
             public readonly string Contact = "~/Views/Home/Contact.cshtml";
             public readonly string Index = "~/Views/Home/Index.cshtml";
-            static readonly _StuffClass s_Stuff = new _StuffClass();
-            public _StuffClass Stuff => s_Stuff;
-            public partial class _StuffClass
+            static readonly _HomeClass s_Home = new _HomeClass();
+            public _HomeClass Home => s_Home;
+            public partial class _HomeClass
             {
                 static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
                 public _ViewNamesClass ViewNames => s_ViewNames;
                 public class _ViewNamesClass
                 {
-                    public readonly string CoolPage = "CoolPage";
+                    public readonly string C__Users_1228412_Documents_Code_R4MVC5_samples_TestMvc5Application_Views_Home = "C:\\Users\\1228412\\Documents\\Code\\R4MVC5\\samples\\TestMvc5Application\\Views\\Home";
                 }
 
-                public readonly string CoolPage = "~/Views/Home/Stuff/CoolPage.cshtml";
+                public readonly string C__Users_1228412_Documents_Code_R4MVC5_samples_TestMvc5Application_Views_Home = "~/Views/Home";
             }
         }
 
@@ -565,164 +510,6 @@ namespace TestMvc5Application.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Contact);
             ContactOverride(callInfo);
             return callInfo;
-        }
-    }
-
-    public partial class T4MVC_HomeController
-    {
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected T4MVC_HomeController(Dummy d)
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public T4MVC_HomeController Actions => MVC.T4MVC_Home;
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public readonly string Area = "";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public readonly string Name = "T4MVC_Home";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public const string NameConst = "T4MVC_Home";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames => s_ActionNames;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ViewsClass
-        {
-            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-            public _ViewNamesClass ViewNames => s_ViewNames;
-            public class _ViewNamesClass
-            {
-            }
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0")]
-        static readonly ViewsClass s_Views = new ViewsClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public ViewsClass Views => s_Views;
-    }
-
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-    public partial class T4MVC_T4MVC_HomeController : TestMvc5Application.Controllers.T4MVC_HomeController
-    {
-        public T4MVC_T4MVC_HomeController(): base(Dummy.Instance)
-        {
-        }
-    }
-
-    public partial class T4MVC_UserController
-    {
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected T4MVC_UserController(Dummy d)
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
-        {
-            return RedirectToAction(taskResult.Result);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
-        {
-            return RedirectToActionPermanent(taskResult.Result);
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public T4MVC_UserController Actions => MVC.T4MVC_User;
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public readonly string Area = "";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public readonly string Name = "T4MVC_User";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        public const string NameConst = "T4MVC_User";
-        [GeneratedCode("R4Mvc5", "1.0")]
-        static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames => s_ActionNames;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public class ViewsClass
-        {
-            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-            public _ViewNamesClass ViewNames => s_ViewNames;
-            public class _ViewNamesClass
-            {
-            }
-        }
-
-        [GeneratedCode("R4Mvc5", "1.0")]
-        static readonly ViewsClass s_Views = new ViewsClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-        public ViewsClass Views => s_Views;
-    }
-
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
-    public partial class T4MVC_T4MVC_UserController : TestMvc5Application.Controllers.T4MVC_UserController
-    {
-        public T4MVC_T4MVC_UserController(): base(Dummy.Instance)
-        {
         }
     }
 
