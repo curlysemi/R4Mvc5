@@ -454,18 +454,35 @@ namespace TestMvc5Application.Controllers
             public readonly string About = "~/Views/Home/About.cshtml";
             public readonly string Contact = "~/Views/Home/Contact.cshtml";
             public readonly string Index = "~/Views/Home/Index.cshtml";
-            static readonly _HomeClass s_Home = new _HomeClass();
-            public _HomeClass Home => s_Home;
-            public partial class _HomeClass
+            static readonly _StuffClass s_Stuff = new _StuffClass();
+            public _StuffClass Stuff => s_Stuff;
+            public partial class _StuffClass
             {
                 static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
                 public _ViewNamesClass ViewNames => s_ViewNames;
                 public class _ViewNamesClass
                 {
-                    public readonly string C__Users_1228412_Documents_Code_R4MVC5_samples_TestMvc5Application_Views_Home = "C:\\Users\\1228412\\Documents\\Code\\R4MVC5\\samples\\TestMvc5Application\\Views\\Home";
+                    public readonly string CoolPage = "CoolPage";
+                    public readonly string SmartPage = "SmartPage";
                 }
 
-                public readonly string C__Users_1228412_Documents_Code_R4MVC5_samples_TestMvc5Application_Views_Home = "~/Views/Home";
+                public readonly string CoolPage = "~/Views/Home/Stuff/CoolPage.cshtml";
+                public readonly string SmartPage = "~/Views/Home/Stuff/SmartPage.cshtml";
+                static readonly _MoreClass s_More = new _MoreClass();
+                public _MoreClass More => s_More;
+                public partial class _MoreClass
+                {
+                    static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                    public _ViewNamesClass ViewNames => s_ViewNames;
+                    public class _ViewNamesClass
+                    {
+                        public readonly string DumbPage = "DumbPage";
+                        public readonly string LamePage = "LamePage";
+                    }
+
+                    public readonly string DumbPage = "~/Views/Home/Stuff/More/DumbPage.cshtml";
+                    public readonly string LamePage = "~/Views/Home/Stuff/More/LamePage.cshtml";
+                }
             }
         }
 

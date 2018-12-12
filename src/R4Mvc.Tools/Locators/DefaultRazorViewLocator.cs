@@ -100,7 +100,7 @@ namespace R4Mvc.Tools.Locators
             var views = new List<View>();
             foreach (var file in _fileLocator.GetFiles(directory, "*.cshtml"))
             {
-                views.Add(GetView(projectRoot, file, controllerName, areaName, templateKind: Path.GetFileName(directory)));
+                views.Add(GetView(projectRoot, file, controllerName, areaName /*, templateKind: Path.GetFileName(directory) */));
             }
 
             string searchPath = directory;
@@ -113,7 +113,9 @@ namespace R4Mvc.Tools.Locators
                 {
                     var relativePath = new Uri("~" + searchPath.GetRelativePath(projectRoot).Replace("\\", "/"), UriKind.Relative);
 
-                    views.Add(new View(areaName, controllerName, searchPath, relativePath, Path.GetFileName(searchPath), subViews));
+                    var directoryName = Path.GetFileName(searchPath);
+
+                    views.Add(new View(areaName, controllerName, searchPath, relativePath, directoryName, subViews));
                 }
             }
 
@@ -126,7 +128,9 @@ namespace R4Mvc.Tools.Locators
 
             foreach (var directory in _fileLocator.GetDirectories(path))
             {
-                subViews[directory] = GetViewsForSubDirectory(projectRoot, controllerName, areaName, directory);
+                var directoryName = Path.GetFileName(directory);
+
+                subViews[directoryName] = GetViewsForSubDirectory(projectRoot, controllerName, areaName, directory);
             }
 
             return subViews;

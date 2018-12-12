@@ -517,54 +517,29 @@ namespace R4Mvc.Tools.Services
             return $"{Constants.PrefixName}_{controllerClass.Name}";
         }
 
-        public ClassBuilder WithViewsClass(ClassBuilder classBuilder, IEnumerable<View> viewFiles)
+        private class R4Mvc5View
         {
-            var viewEditorTemplates = viewFiles.Where(c => c.TemplateKind == "EditorTemplates" || c.TemplateKind == "DisplayTemplates");
-            var subpathViews = viewFiles.Where(c => c.TemplateKind != null && c.TemplateKind != "EditorTemplates" && c.TemplateKind != "DisplayTemplates")
-                .OrderBy(v => v.TemplateKind);
+            public string Name { get; set; }
+            public string RelativePath { get; set; }
+        }
 
-            /* public class ViewsClass
-             * {
-             * [...] */
-             classBuilder.WithChildClass("ViewsClass", cb => cb
-                .WithModifiers(SyntaxKind.PublicKeyword)
-                .WithGeneratedNonUserCodeAttributes()
-                // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
-                // public _ViewNamesClass ViewNames => s_ViewNames;
-                .WithStaticFieldBackedProperty("ViewNames", ViewNamesClassName, SyntaxKind.PublicKeyword)
-                /* public class _ViewNamesClass
-                 * {
-                 *  public readonly string {view} = "{view}";
-                 * }
-                 */
-                .WithChildClass(ViewNamesClassName, vnc => vnc
-                    .WithModifiers(SyntaxKind.PublicKeyword)
-                    .ForEach(viewFiles.Where(c => c.TemplateKind == null), (vc, v) => vc
-                        .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
-                .ForEach(viewFiles.Where(c => c.TemplateKind == null), (c, v) => c
-                    // public readonly string {view} = "~/Views/{controller}/{view}.cshtml";
-                    .WithStringField(v.Name.SanitiseFieldName(), v.RelativePath.ToString(), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword))
-                .ForEach(viewEditorTemplates.GroupBy(v => v.TemplateKind), (c, g) => c
-                    // static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
-                    // public _DisplayTemplatesClass DisplayTemplates => s_DisplayTemplates;
-                    .WithStaticFieldBackedProperty(g.Key, $"_{g.Key}Class", SyntaxKind.PublicKeyword)
-                    /* public partial _DisplayTemplatesClass
-                     * {
-                     *  public readonly string {view} = "{view}";
-                     * }
-                     */
-                    .WithChildClass($"_{g.Key}Class", tc => tc
-                        .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
-                        .ForEach(g, (tcc, v) => tcc
-                            .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword))))
-                .ForEach(subpathViews.GroupBy(v => v.TemplateKind), (c, g) => c
+        private class R4Mvc5ViewFolder
+        {
+            public string Name { get; set; }
+            public List<R4Mvc5View> Views { get; set; }
+            public List<R4Mvc5ViewFolder> Folders { get; set; }
+        }
+
+        private static void BuildSubViews(ClassBuilder classBuilder, R4Mvc5ViewFolder folder)
+        {
+            classBuilder
                     // static readonly _{viewFolder}Class s_{viewFolder} = new _{viewFolder}Class();
                     // public _{viewFolder}Class {viewFolder} => s_{viewFolder};
-                    .WithStaticFieldBackedProperty(g.Key, $"_{g.Key}Class", SyntaxKind.PublicKeyword)
+                    .WithStaticFieldBackedProperty(folder.Name, $"_{folder.Name}Class", SyntaxKind.PublicKeyword)
                     /* public class _{viewFolder}Class
                      * {
                      * [...] */
-                    .WithChildClass($"_{g.Key}Class", tc => tc
+                    .WithChildClass($"_{folder.Name}Class", tc => tc
                         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
                         // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
                         // public _ViewNamesClass ViewNames => s_ViewNames;
@@ -576,11 +551,197 @@ namespace R4Mvc.Tools.Services
                          */
                         .WithChildClass(ViewNamesClassName, vnc => vnc
                             .WithModifiers(SyntaxKind.PublicKeyword)
-                            .ForEach(g, (vc, v) => vc
+                            .ForEach(folder.Views, (vc, v) => vc
                                 .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
-                        .ForEach(g, (vc, v) => vc
+                        .ForEach(folder.Views, (vc, v) => vc
                             // public string {view} = "~/Views/{controller}/{viewFolder}/{view}.cshtml";
-                            .WithStringField(v.Name.SanitiseFieldName(), v.RelativePath.ToString(), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))));
+                            .WithStringField(v.Name.SanitiseFieldName(), v.RelativePath.ToString(), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword))
+                        .ForEach(folder.Folders, (sc, s) => { BuildSubViews(sc, s); }));
+
+        }
+
+        private static IEnumerable<R4Mvc5ViewFolder> BuildFromCrappyDictionary(Dictionary<string, IEnumerable<View>> dictionary)
+        {
+            var folders = new List<R4Mvc5ViewFolder>();
+            foreach (var kvp in dictionary)
+            {
+                var folder = new R4Mvc5ViewFolder();
+                folder.Name =  kvp.Key;
+                folder.Folders = kvp.Value.Where(vf => vf.IsHackyDirectory).SelectMany(t => BuildFromCrappyViewModel(t)).ToList();
+                folder.Views = kvp.Value.Where(vf => !vf.IsHackyDirectory).Select(vf => new R4Mvc5View { Name = vf.Name, RelativePath = vf.RelativePath.ToString() }).ToList();
+                folders.Add(folder);
+            }
+            return folders;
+        }
+
+        private static IEnumerable<R4Mvc5ViewFolder> BuildFromCrappyViewModel(View viewFolder, string name = null)
+        {
+            //var thisFolder = new R4Mvc5ViewFolder();
+
+            //thisFolder.Name = view.Name;
+
+            ///*
+
+            //folder_name
+            //        file
+            //        file2
+            //other_folder
+            //        file3
+            //        file4
+
+            //*/
+
+            ////thisFolder.Views = view.SubFolders.
+
+            ////throw new NotImplementedException();
+
+            //return thisFolder;
+            var folders = new List<R4Mvc5ViewFolder>();
+
+            var subViews = viewFolder?.SubFolders?.Values?.FirstOrDefault();
+            if (subViews != null)
+            {
+                foreach (var kvp in viewFolder?.SubFolders)
+                {
+                    var folder = new R4Mvc5ViewFolder();
+                    folder.Name = name ?? kvp.Key;
+                    folder.Folders = kvp.Value.Where(vf => vf.IsHackyDirectory).SelectMany(t => BuildFromCrappyViewModel(t)).ToList();
+                    folder.Views = kvp.Value.Where(vf => !vf.IsHackyDirectory).Select(vf => new R4Mvc5View { Name = vf.Name, RelativePath = vf.RelativePath.ToString() }).ToList();
+                    folders.Add(folder);
+
+                }
+
+            }
+
+            return folders;
+
+            //return null;
+        }
+
+
+        public ClassBuilder WithViewsClass(ClassBuilder classBuilder, IEnumerable<View> viewFiles)
+        {
+            var viewEditorTemplates = viewFiles.Where(c => c.TemplateKind == "EditorTemplates" || c.TemplateKind == "DisplayTemplates");
+            var subpathViews = viewFiles.Where(c => c.TemplateKind != null && c.TemplateKind != "EditorTemplates" && c.TemplateKind != "DisplayTemplates")
+                .OrderBy(v => v.TemplateKind);
+
+            List<R4Mvc5ViewFolder> subFolders = new List<R4Mvc5ViewFolder>();
+            var viewFolder = viewFiles?.FirstOrDefault(vf => vf.IsHackyDirectory);
+            if (viewFolder != null)
+            {
+                try
+                {
+                    var folders = BuildFromCrappyViewModel(viewFolder);
+                    if (folders?.Any() == true)
+                    {
+                        subFolders.AddRange(folders);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                //var subViews = viewFolder?.SubFolders?.Values?.FirstOrDefault();
+                //if (subViews != null)
+                //{
+                //    foreach (var kvp in viewFolder?.SubFolders)
+                //    {
+                //        var folder = new R4Mvc5ViewFolder();
+                //        folder.Name = kvp.Key;
+                //        folder.Folders = kvp.Value.Where()
+
+                //    }
+
+                //}
+                //var subFolders = viewFolder.SubFolders;
+                //subFolders.Add(new R4Mvc5ViewFolder
+                //{
+
+                //})
+            }
+
+            var i = 0;
+
+            /* public class ViewsClass
+             * {
+             * [...] */
+            classBuilder.WithChildClass("ViewsClass", cb => cb
+               .WithModifiers(SyntaxKind.PublicKeyword)
+               .WithGeneratedNonUserCodeAttributes()
+               // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+               // public _ViewNamesClass ViewNames => s_ViewNames;
+               .WithStaticFieldBackedProperty("ViewNames", ViewNamesClassName, SyntaxKind.PublicKeyword)
+               /* public class _ViewNamesClass
+                * {
+                *  public readonly string {view} = "{view}";
+                * }
+                */
+               .WithChildClass(ViewNamesClassName, vnc => vnc
+                   .WithModifiers(SyntaxKind.PublicKeyword)
+                   .ForEach(viewFiles.Where(c => c.TemplateKind == null), (vc, v) => vc
+                       .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
+               .ForEach(viewFiles.Where(c => c.TemplateKind == null), (c, v) => c
+                   // public readonly string {view} = "~/Views/{controller}/{view}.cshtml";
+                   .WithStringField(v.Name.SanitiseFieldName(), v.RelativePath.ToString(), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword))
+               .ForEach(viewEditorTemplates.GroupBy(v => v.TemplateKind), (c, g) => c
+                   // static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
+                   // public _DisplayTemplatesClass DisplayTemplates => s_DisplayTemplates;
+                   .WithStaticFieldBackedProperty(g.Key, $"_{g.Key}Class", SyntaxKind.PublicKeyword)
+                   /* public partial _DisplayTemplatesClass
+                    * {
+                    *  public readonly string {view} = "{view}";
+                    * }
+                    */
+                   .WithChildClass($"_{g.Key}Class", tc => tc
+                       .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
+                       .ForEach(g, (tcc, v) => tcc
+                           .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword))))
+               // .ForEach(subpathViews/*.Where(v => !v.IsHackyDirectory)*//*.GroupBy(v => v.TemplateKind)*/, (innerClassBuilder, groupedSubPath) =>
+               // {
+                   
+               //     if (groupedSubPath.IsHackyDirectory)
+               //     {
+               //         if (groupedSubPath.SubFolders?.Any() == true)
+               //         {
+               //             //var views = groupedSubPath.SubFolders.Values.Where(f => f.
+
+               //         }
+
+
+               //     }
+               //     else
+               //     {
+
+               //     }
+
+               //    innerClassBuilder
+               //     // static readonly _{viewFolder}Class s_{viewFolder} = new _{viewFolder}Class();
+               //     // public _{viewFolder}Class {viewFolder} => s_{viewFolder};
+               //     .WithStaticFieldBackedProperty(groupedSubPath.TemplateKind, $"_{groupedSubPath.TemplateKind}Class", SyntaxKind.PublicKeyword)
+               //     /* public class _{viewFolder}Class
+               //      * {
+               //      * [...] */
+               //     .WithChildClass($"_{groupedSubPath.TemplateKind}Class", tc => tc
+               //         .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.PartialKeyword)
+               //         // static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+               //         // public _ViewNamesClass ViewNames => s_ViewNames;
+               //         .WithStaticFieldBackedProperty("ViewNames", ViewNamesClassName, SyntaxKind.PublicKeyword)
+               //         /* public class _ViewNamesClass
+               //          * {
+               //          *  public readonly string {view} = "{view}";
+               //          * }
+               //          */
+               //         .WithChildClass(ViewNamesClassName, vnc => vnc
+               //             .WithModifiers(SyntaxKind.PublicKeyword)
+               //             .ForEach(new[] { groupedSubPath }, (vc, v) => vc
+               //                 .WithStringField(v.Name.SanitiseFieldName(), v.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
+               //         .ForEach(new[] { groupedSubPath }, (vc, v) => vc
+               //             // public string {view} = "~/Views/{controller}/{viewFolder}/{view}.cshtml";
+               //             .WithStringField(v.Name.SanitiseFieldName(), v.RelativePath.ToString(), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)));
+               //})
+               .ForEach(subFolders, (innerClassBuilder, folder) => BuildSubViews(innerClassBuilder, folder))
+               );
 
             return classBuilder
                 .WithStaticFieldBackedProperty("Views", "ViewsClass", SyntaxKind.PublicKeyword);

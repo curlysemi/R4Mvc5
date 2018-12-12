@@ -210,6 +210,8 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Home\Stuff\CoolPage.cshtml" />
     <Content Include="Views\Home\Stuff\More\LamePage.cshtml" />
+    <Content Include="Views\Home\Stuff\SmartPage.cshtml" />
+    <Content Include="Views\Home\Stuff\More\DumbPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

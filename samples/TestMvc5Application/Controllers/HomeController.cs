@@ -20,6 +20,8 @@ namespace TestMvc5Application.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            var otherView = MVC.Home.Views.Stuff.More.DumbPage;
+
             return View(MVC.Home.Views.Contact);
         }
     }
