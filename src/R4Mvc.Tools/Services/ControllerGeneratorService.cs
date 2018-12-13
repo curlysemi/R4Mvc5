@@ -576,26 +576,6 @@ namespace R4Mvc.Tools.Services
 
         private static IEnumerable<R4Mvc5ViewFolder> BuildFromCrappyViewModel(View viewFolder, string name = null)
         {
-            //var thisFolder = new R4Mvc5ViewFolder();
-
-            //thisFolder.Name = view.Name;
-
-            ///*
-
-            //folder_name
-            //        file
-            //        file2
-            //other_folder
-            //        file3
-            //        file4
-
-            //*/
-
-            ////thisFolder.Views = view.SubFolders.
-
-            ////throw new NotImplementedException();
-
-            //return thisFolder;
             var folders = new List<R4Mvc5ViewFolder>();
 
             var subViews = viewFolder?.SubFolders?.Values?.FirstOrDefault();
@@ -614,8 +594,6 @@ namespace R4Mvc.Tools.Services
             }
 
             return folders;
-
-            //return null;
         }
 
 
@@ -641,27 +619,7 @@ namespace R4Mvc.Tools.Services
                 {
 
                 }
-
-                //var subViews = viewFolder?.SubFolders?.Values?.FirstOrDefault();
-                //if (subViews != null)
-                //{
-                //    foreach (var kvp in viewFolder?.SubFolders)
-                //    {
-                //        var folder = new R4Mvc5ViewFolder();
-                //        folder.Name = kvp.Key;
-                //        folder.Folders = kvp.Value.Where()
-
-                //    }
-
-                //}
-                //var subFolders = viewFolder.SubFolders;
-                //subFolders.Add(new R4Mvc5ViewFolder
-                //{
-
-                //})
             }
-
-            var i = 0;
 
             /* public class ViewsClass
              * {
