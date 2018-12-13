@@ -10,23 +10,21 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>R4Mvc.Tools</PackageId>
-    <Authors>Kevin Kuszyk, Scott Mackay, Artiom Chilaru</Authors>
+    <PackageId>R4Mvc5</PackageId>
+    <Authors>curlysemi, Kevin Kuszyk, Scott Mackay, Artiom Chilaru</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/T4MVC/R4MVC/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/T4MVC/R4MVC</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/T4MVC/R4MVC</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/curlysemi/R4MVC5/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/curlysemi/R4MVC5</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/curlysemi/R4MVC5</RepositoryUrl>
     <Title>R4Mvc Tools</Title>
-    <Description>R4Mvc is a tool that generates strongly typed helpers for ASP.NET Core MVC.</Description>
-    <PackageTags>aspnetcore mvc r4mvc</PackageTags>
+    <Description>R4Mvc5 is a tool that generates strongly typed helpers for ASP.NET MVC 5.</Description>
+    <PackageTags>r4mvc5 t4mvc aspnet mvc mvc5 r4mvc</PackageTags>
     <VersionPrefix>1.0.0</VersionPrefix>
     <AssemblyVersion Condition="$(BuildNumber) != ''">$(VersionPrefix).$(BuildNumber)</AssemblyVersion>
-    <PackageReleaseNotes>
-+ Adding the option to add extra namespaces to generated files
-! Now working with multi-targeted projects (#66)
-+ Now available as a dotnet cli tool (see R4Mvc.Tools.Cli package)
-    </PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <AssemblyName>R4Mvc5</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>N/A</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">

@@ -1,10 +1,10 @@
 ﻿$ErrorActionPreference = 'Stop'
 
-Register-TabExpansion Generate-R4MVC @{
+Register-TabExpansion Generate-R4MVC5 @{
     Project = { GetProjects }
 }
 
-Register-TabExpansion Remove-R4MVC @{
+Register-TabExpansion Remove-R4MVC5 @{
     Project = { GetProjects }
 }
 
@@ -18,14 +18,14 @@ Register-TabExpansion Remove-R4MVC @{
 .PARAMETER Project
     The project to use.
 #>
-function Generate-R4MVC
+function Generate-R4MVC5
 {
     [CmdletBinding(PositionalBinding = $false)]
     param(
         [string] $Project)
 
     $dteProject = GetProject $Project
-    $r4mvcPath = Join-Path (Split-Path $PSCommandPath) "R4Mvc.Tools.exe"
+    $r4mvcPath = Join-Path (Split-Path $PSCommandPath) "R4Mvc5.exe"
 
     & $r4mvcPath generate -p $dteProject.FullName
 }
@@ -40,14 +40,14 @@ function Generate-R4MVC
 .PARAMETER Project
     The project to use.
 #>
-function Remove-R4MVC
+function Remove-R4MVC5
 {
     [CmdletBinding(PositionalBinding = $false)]
     param(
         [string] $Project)
 
     $dteProject = GetProject $Project
-    $r4mvcPath = Join-Path (Split-Path $PSCommandPath) "R4Mvc.Tools.exe"
+    $r4mvcPath = Join-Path (Split-Path $PSCommandPath) "R4Mvc5.exe"
 
     & $r4mvcPath remove -p $dteProject.FullName
 }

@@ -9,16 +9,16 @@
     GUID = 'cbe4b5b4-0663-4e78-a43e-33d60e1df7d7'
 
     # Author of this module
-    Author = 'R4MVC'
+    Author = 'R4MVC5'
 
     # Company or vendor of this module
-    CompanyName = 'R4MVC'
+    CompanyName = 'R4MVC5'
 
     # Copyright statement for this module
-    Copyright = '(c) 2017 All rights reserved.'
+    Copyright = '(c) 2018 All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'R4MVC Code Generator'
+    Description = 'R4MVC5 Code Generator'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '3.0'
@@ -58,8 +58,8 @@
 
     # Functions to export from this module
     FunctionsToExport = (
-        'Generate-R4MVC',
-        'Remove-R4MVC'
+        'Generate-R4MVC5',
+        'Remove-R4MVC5'
     )
 
     # Cmdlets to export from this module
