@@ -437,7 +437,7 @@ namespace R4Mvc.Tools.Services
 
         public ClassDeclarationSyntax FileResultClass()
             => IActionResultDerivedClass(Constants.FileResultClass, "FileResult",
-                c => c.WithBaseConstructorCall(SimpleLiteral.Null), anyOtherStuff: // ctor : base(null)
+                c => c.WithBaseConstructorCall(SimpleLiteral.Space), anyOtherStuff: // ctor : base(" ")
                 r => r.WithMethod("WriteFile", "void", m => m
                     .WithModifiers(SyntaxKind.ProtectedKeyword, SyntaxKind.OverrideKeyword)
                         .WithParameter("response", "HttpResponseBase")
