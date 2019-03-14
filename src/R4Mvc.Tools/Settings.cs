@@ -11,8 +11,10 @@
         public string LinksNamespace { get; set; } = "Links";
         public bool SplitIntoMultipleFiles { get; set; } = false;
         public bool SplitViewOnlyPagesIntoMultipleFiles { get; set; } = false;
-        public string StaticFilesPath { get; set; } = "wwwroot";
-        public string[] ExcludedStaticFileExtensions { get; set; }
+        public string StaticFilesPath { get; set; } = "";
+
+        public string[] ExcludedStaticFileDirectories { get; set; } = new[] { "App_Data", "App_Start", "bin", "Controllers", "Models", "obj", "Views", "Properties" };
+        public string[] ExcludedStaticFileExtensions { get; set; } = new[] { ".cs", ".asax", ".ashx", ".config", ".tt", ".t4", ".config", ".cshtml", ".json", ".csproj", ".vspcc", ".rctob", ".exe", ".dll", ".pdb", ".cache", ".CopyComplete", ".force" };
         public string[] ReferencedNamespaces { get; set; }
 
         // Don't include the page ViewsClass by default, and hide the option unless it's enabled

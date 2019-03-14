@@ -4,6 +4,6 @@ namespace R4Mvc.Tools.Services
 {
     public interface IStaticFileGeneratorService
     {
-        MemberDeclarationSyntax GenerateStaticFiles(string projectRoot);
+        MemberDeclarationSyntax GenerateStaticFiles(string projectRoot, string[] blacklistedDirectories);
     }
 }
