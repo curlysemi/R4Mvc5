@@ -205,7 +205,7 @@ namespace R4Mvc.Tools.Services
             //}
 
             // Generate a list of all static files from the wwwroot path
-            var staticFileNode = _staticFileGenerator.GenerateStaticFiles(projectRoot, _settings.ExcludedStaticFileDirectories);
+            var staticFileNode = _staticFileGenerator.GenerateStaticFiles(projectRoot, _settings.StaticFilesFolders);
 
             var r4MvcFile = new CodeFileBuilder(_settings, true)
                     .WithMembers(

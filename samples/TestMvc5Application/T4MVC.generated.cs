@@ -79,18 +79,6 @@ public static partial class Links
         public static readonly string Site_css = Url("Site.css");
     }
 
-    public static partial class fonts
-    {
-        public const string UrlPath = "~/fonts";
-        public static string Url() => T4MVCHelpers.ProcessVirtualPath(UrlPath);
-        public static string Url(string fileName) => T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName);
-        public static readonly string glyphicons_halflings_regular_eot = Url("glyphicons-halflings-regular.eot");
-        public static readonly string glyphicons_halflings_regular_svg = Url("glyphicons-halflings-regular.svg");
-        public static readonly string glyphicons_halflings_regular_ttf = Url("glyphicons-halflings-regular.ttf");
-        public static readonly string glyphicons_halflings_regular_woff = Url("glyphicons-halflings-regular.woff");
-        public static readonly string glyphicons_halflings_regular_woff2 = Url("glyphicons-halflings-regular.woff2");
-    }
-
     public static partial class Scripts
     {
         public const string UrlPath = "~/Scripts";
@@ -112,10 +100,6 @@ public static partial class Links
         public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
         public static readonly string modernizr_2_8_3_js = Url("modernizr-2.8.3.js");
     }
-
-    public static readonly string favicon_ico = Url("favicon.ico");
-    public static readonly string T4MVC_tt_settings_xml = Url("T4MVC.tt.settings.xml");
-    public static readonly string TestMvc5Application_csproj_user = Url("TestMvc5Application.csproj.user");
 }
 
 [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]

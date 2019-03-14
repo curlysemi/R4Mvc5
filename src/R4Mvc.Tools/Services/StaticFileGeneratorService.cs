@@ -20,10 +20,10 @@ namespace R4Mvc.Tools.Services
             _settings = settings;
         }
 
-        public MemberDeclarationSyntax GenerateStaticFiles(string projectRoot, string[] blacklistedDirectories)
+        public MemberDeclarationSyntax GenerateStaticFiles(string projectRoot, string[] staticFilesFolders)
         {
             var staticFilesRoot = GetStaticFilesPath(projectRoot);
-            var staticfiles = _staticFileLocators.SelectMany(x => x.Find(staticFilesRoot, blacklistedDirectories));
+            var staticfiles = _staticFileLocators.SelectMany(x => x.Find(staticFilesRoot, staticFilesFolders));
 
             var linksClass = new ClassBuilder(_settings.LinksNamespace)
                 .WithModifiers(SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword, SyntaxKind.PartialKeyword)

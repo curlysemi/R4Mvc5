@@ -1,5 +1,5 @@
 {
-  "_generatedByVersion": "1.0.1",
+  "_generatedByVersion": "1.0.2",
   "UpdateGeneratedByVersion": true,
   "HelpersPrefix": "MVC",
   "PageHelpersPrefix": "MVCPages",
@@ -8,35 +8,25 @@
   "SplitIntoMultipleFiles": false,
   "SplitViewOnlyPagesIntoMultipleFiles": false,
   "StaticFilesPath": "",
-  "ExcludedStaticFileDirectories": [
-    "App_Data",
-    "App_Start",
-    "bin",
-    "Controllers",
-    "Models",
-    "obj",
-    "Views",
-    "Properties"
+  "StaticFilesFolders": [
+    "Scripts",
+    "Content",
+    "Scripts",
+    "Content"
   ],
   "ExcludedStaticFileExtensions": [
     ".cs",
+    ".cshtml",
     ".asax",
     ".ashx",
-    ".config",
-    ".tt",
-    ".t4",
-    ".config",
+    ".aspx",
+    ".ascx",
+    ".cs",
     ".cshtml",
-    ".json",
-    ".csproj",
-    ".vspcc",
-    ".rctob",
-    ".exe",
-    ".dll",
-    ".pdb",
-    ".cache",
-    ".CopyComplete",
-    ".force"
+    ".asax",
+    ".ashx",
+    ".aspx",
+    ".ascx"
   ],
   "ReferencedNamespaces": null,
   "FeatureFolders": {

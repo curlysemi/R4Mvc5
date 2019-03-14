@@ -12,12 +12,12 @@ namespace R4Mvc.Tools.Locators
         public string[] GetDirectories(string parentPath, bool recurse = false)
             => Directory.GetDirectories(parentPath, "*", recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
 
-        public string[] GetFiles(string parentPath, string filter, bool recurse = false, string[] blacklistedDirectories = null)
+        public string[] GetFiles(string parentPath, string filter, bool recurse = false, string[] staticFilesFolders = null)
         {
             if (!DirectoryExists(parentPath))
                 return new string[0];
 
-            if (blacklistedDirectories?.Any() != true || !recurse)
+            if (staticFilesFolders?.Any() != true || !recurse)
             {
                 return Directory.GetFiles(parentPath, filter, recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             }
@@ -25,13 +25,13 @@ namespace R4Mvc.Tools.Locators
             {
                 var files = new List<string>();
 
-                // get all files in the current directory
-                //// don't worry about excluded files by extension yet . . . that filtering happens after this call
-                var topFiles = Directory.GetFiles(parentPath, filter, SearchOption.TopDirectoryOnly);
-                if (topFiles?.Any() == true)
-                {
-                    files.AddRange(topFiles);
-                }
+                //// get all files in the current directory
+                ////// don't worry about excluded files by extension yet . . . that filtering happens after this call
+                //var topFiles = Directory.GetFiles(parentPath, filter, SearchOption.TopDirectoryOnly);
+                //if (topFiles?.Any() == true)
+                //{
+                //    files.AddRange(topFiles);
+                //}
 
                 // get all directories in the current directory
                 var otherDirectories = Directory.GetDirectories(parentPath, filter, SearchOption.TopDirectoryOnly);
@@ -41,7 +41,7 @@ namespace R4Mvc.Tools.Locators
                     foreach (var directory in otherDirectories)
                     {
                         var thisDirectoryName = Path.GetFileName(directory);
-                        if (!blacklistedDirectories.Contains(thisDirectoryName))
+                        if (staticFilesFolders.Contains(thisDirectoryName))
                         {
                             // recursively get the files in each non-blacklisted directory
                             var theseFiles = Directory.GetFiles(directory, filter, SearchOption.AllDirectories);

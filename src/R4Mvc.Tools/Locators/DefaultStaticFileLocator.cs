@@ -14,9 +14,9 @@ namespace R4Mvc.Tools.Locators
             _settings = settings;
         }
 
-        public IEnumerable<StaticFile> Find(string staticPathRoot, string[] blacklistedDirectories)
+        public IEnumerable<StaticFile> Find(string staticPathRoot, string[] staticFilesFolders)
         {
-            var files = _fileLocator.GetFiles(staticPathRoot, "*", recurse: true, blacklistedDirectories: blacklistedDirectories).AsEnumerable();
+            var files = _fileLocator.GetFiles(staticPathRoot, "*", recurse: true, staticFilesFolders: staticFilesFolders).AsEnumerable();
             if (_settings.ExcludedStaticFileExtensions?.Length > 0)
                 files = files.Where(f => !_settings.ExcludedStaticFileExtensions.Any(e => f.EndsWith(e)));
             if (!staticPathRoot.EndsWith("/"))

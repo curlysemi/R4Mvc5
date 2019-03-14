@@ -2,7 +2,7 @@
 {
     public interface IFileLocator
     {
-        string[] GetFiles(string parentPath, string filter, bool recurse = false, string[] blacklistedDirectories = null);
+        string[] GetFiles(string parentPath, string filter, bool recurse = false, string[] staticFilesFolders = null);
         string[] GetDirectories(string parentPath, bool recurse = false);
         bool DirectoryExists(string path);
     }
