@@ -52,6 +52,16 @@ project-path:
                 _settings = settings;
                 _generatedFileTesterService = generatedFileTesterService;
                 _filePersistService = filePersistService;
+
+                if (_settings.StaticFilesFolders?.Any() == true)
+                {
+                    _settings.StaticFilesFolders = _settings.StaticFilesFolders.Distinct().ToArray();
+                }
+
+                if (_settings.ExcludedStaticFileExtensions?.Any() == true)
+                {
+                    _settings.ExcludedStaticFileExtensions = _settings.ExcludedStaticFileExtensions.Distinct().ToArray();
+                }
             }
 
             public async Task Run(string projectPath, IConfiguration configuration, string[] args)

@@ -10,17 +10,9 @@
   "StaticFilesPath": "",
   "StaticFilesFolders": [
     "Scripts",
-    "Content",
-    "Scripts",
     "Content"
   ],
   "ExcludedStaticFileExtensions": [
-    ".cs",
-    ".cshtml",
-    ".asax",
-    ".ashx",
-    ".aspx",
-    ".ascx",
     ".cs",
     ".cshtml",
     ".asax",
