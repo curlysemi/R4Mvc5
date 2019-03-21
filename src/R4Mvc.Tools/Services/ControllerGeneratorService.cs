@@ -162,7 +162,7 @@ namespace R4Mvc.Tools.Services
                         .WithModifiers(SyntaxKind.PublicKeyword)
                         .WithGeneratedNonUserCodeAttributes()
                         .ForEach(allParams, (c, m) => c
-                            .WithStringField(SafeName(m.Name), SafeName(m.Name), SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
+                            .WithStringField(SafeName(m.Name), m.Name, SyntaxKind.PublicKeyword, SyntaxKind.ReadOnlyKeyword)))
                     ;
             }
 

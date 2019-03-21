@@ -15,7 +15,7 @@ using System.Web.Routing;
 using System.Web.Mvc;
 using T4MVC;
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 public static partial class MVC
 {
     public static readonly TestMvc5Application.Controllers.HomeController Home = new TestMvc5Application.Controllers.T4MVC_HomeController();
@@ -25,7 +25,7 @@ public static partial class MVC
 
 namespace T4MVC
 {
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
     public class Dummy
     {
         private Dummy()
@@ -35,7 +35,7 @@ namespace T4MVC
         public static Dummy Instance = new Dummy();
     }
 
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
     public partial class SharedController
     {
         public class ViewsClass
@@ -57,7 +57,7 @@ namespace T4MVC
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 public static partial class Links
 {
     public const string UrlPath = "~";
@@ -102,14 +102,14 @@ public static partial class Links
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal static class T4MVCHelpers
 {
     private static string ProcessVirtualPathDefault(string virtualPath) => virtualPath;
     public static Func<string, string> ProcessVirtualPath = ProcessVirtualPathDefault;
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_ActionResult : ActionResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null)
@@ -146,7 +146,7 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : ActionResult, IT4MVCA
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_ViewResult : ViewResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_ViewResult(string area, string controller, string action, string protocol = null)
@@ -179,7 +179,7 @@ internal partial class T4MVC_System_Web_Mvc_ViewResult : ViewResult, IT4MVCActio
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_PartialViewResult : PartialViewResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null)
@@ -212,7 +212,7 @@ internal partial class T4MVC_System_Web_Mvc_PartialViewResult : PartialViewResul
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_JsonResult : JsonResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null)
@@ -245,7 +245,7 @@ internal partial class T4MVC_System_Web_Mvc_JsonResult : JsonResult, IT4MVCActio
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_ContentResult : ContentResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_ContentResult(string area, string controller, string action, string protocol = null)
@@ -278,7 +278,7 @@ internal partial class T4MVC_System_Web_Mvc_ContentResult : ContentResult, IT4MV
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_FileResult : FileResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_FileResult(string area, string controller, string action, string protocol = null): base(" ")
@@ -315,7 +315,7 @@ internal partial class T4MVC_System_Web_Mvc_FileResult : FileResult, IT4MVCActio
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_RedirectResult : RedirectResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_RedirectResult(string area, string controller, string action, string protocol = null): base(" ")
@@ -348,7 +348,7 @@ internal partial class T4MVC_System_Web_Mvc_RedirectResult : RedirectResult, IT4
     }
 }
 
-[GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+[GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
 internal partial class T4MVC_System_Web_Mvc_RedirectToRouteResult : RedirectToRouteResult, IT4MVCActionResult
 {
     public T4MVC_System_Web_Mvc_RedirectToRouteResult(string area, string controller, string action, string protocol = null): base(null)
@@ -385,55 +385,55 @@ namespace TestMvc5Application.Controllers
 {
     public partial class HomeController
     {
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public HomeController()
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected HomeController(Dummy d)
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
         {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
         {
             return RedirectToAction(taskResult.Result);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
         {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
         {
             return RedirectToActionPermanent(taskResult.Result);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public HomeController Actions => MVC.Home;
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public readonly string Area = "";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public readonly string Name = "Home";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public const string NameConst = "Home";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames => s_ActionNames;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
@@ -441,7 +441,7 @@ namespace TestMvc5Application.Controllers
             public readonly string Contact = "Contact";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
@@ -449,34 +449,34 @@ namespace TestMvc5Application.Controllers
             public const string Contact = "Contact";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionParamsClass_Index s_IndexParams = new ActionParamsClass_Index();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionParamsClass_Index IndexParams => s_IndexParams;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionParamsClass_About s_AboutParams = new ActionParamsClass_About();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionParamsClass_About AboutParams => s_AboutParams;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionParamsClass_About
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionParamsClass_Contact s_ContactParams = new ActionParamsClass_Contact();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionParamsClass_Contact ContactParams => s_ContactParams;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionParamsClass_Contact
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ViewsClass
         {
             static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
@@ -523,13 +523,13 @@ namespace TestMvc5Application.Controllers
             }
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ViewsClass s_Views = new ViewsClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ViewsClass Views => s_Views;
     }
 
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
     public partial class T4MVC_HomeController : TestMvc5Application.Controllers.HomeController
     {
         public T4MVC_HomeController(): base(Dummy.Instance)
@@ -569,87 +569,87 @@ namespace TestMvc5Application.Controllers
 
     public partial class UserController
     {
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public UserController()
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected UserController(Dummy d)
         {
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
         {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
         {
             return RedirectToAction(taskResult.Result);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
         {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
         {
             return RedirectToActionPermanent(taskResult.Result);
         }
 
         [NonAction]
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public virtual ActionResult Details()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
 
         [NonAction]
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public virtual ActionResult Stropping()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Stropping);
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public UserController Actions => MVC.User;
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public readonly string Area = "";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public readonly string Name = "User";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         public const string NameConst = "User";
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionNamesClass s_ActionNames = new ActionNamesClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames => s_ActionNames;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
             public readonly string Details = "Details";
             public readonly string Stropping = "Stropping";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Details = "Details";
             public const string Stropping = "Stropping";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionParamsClass_Details s_DetailsParams = new ActionParamsClass_Details();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams => s_DetailsParams;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionParamsClass_Details
         {
             public readonly string id = "id";
@@ -657,17 +657,17 @@ namespace TestMvc5Application.Controllers
             public readonly string model = "model";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ActionParamsClass_Stropping s_StroppingParams = new ActionParamsClass_Stropping();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ActionParamsClass_Stropping StroppingParams => s_StroppingParams;
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ActionParamsClass_Stropping
         {
-            public readonly string @default = "@default";
+            public readonly string @default = "default";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public class ViewsClass
         {
             static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
@@ -680,13 +680,13 @@ namespace TestMvc5Application.Controllers
             public readonly string Details = "~/Views/User/Details.cshtml";
         }
 
-        [GeneratedCode("R4Mvc5", "1.0")]
+        [GeneratedCode("R4Mvc5", "1.0.3")]
         static readonly ViewsClass s_Views = new ViewsClass();
-        [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+        [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
         public ViewsClass Views => s_Views;
     }
 
-    [GeneratedCode("R4Mvc5", "1.0"), DebuggerNonUserCode]
+    [GeneratedCode("R4Mvc5", "1.0.3"), DebuggerNonUserCode]
     public partial class T4MVC_UserController : TestMvc5Application.Controllers.UserController
     {
         public T4MVC_UserController(): base(Dummy.Instance)
