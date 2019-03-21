@@ -722,7 +722,7 @@ namespace TestMvc5Application.Controllers
         public override System.Web.Mvc.ActionResult Stropping(string @default)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Stropping);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "@default", @default);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "default", @default);
             StroppingOverride(callInfo, @default);
             return callInfo;
         }

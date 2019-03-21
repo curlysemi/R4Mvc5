@@ -503,7 +503,7 @@ namespace R4Mvc.Tools.Services
                                     : new object[] { "Area", "Name", "ActionNames." + method.Name }
                             )
                             .ForEach(method.Parameters, (cb, p) => cb
-                                .MethodCall("ModelUnbinderHelpers", "AddRouteValues", "callInfo.RouteValueDictionary", SimpleLiteral.String(SafeName(p.Name)), SafeName(p.Name)))
+                                .MethodCall("ModelUnbinderHelpers", "AddRouteValues", "callInfo.RouteValueDictionary", SimpleLiteral.String(p.Name), SafeName(p.Name))) // the use of `SafeName(...)` is to help with stropping/stropped parameters
                             .MethodCall(null, method.Name + overrideMethodSuffix, new[] { "callInfo" }.Concat(method.Parameters.Select(p => SafeName(p.Name))).ToArray())
                             .Statement(rb => isTaskResult
                                 ? rb.ReturnMethodCall(typeof(Task).FullName, "FromResult" + (isGenericTaskResult ? "<" + methodReturnType + ">" : null), "callInfo")
