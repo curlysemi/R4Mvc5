@@ -4,7 +4,7 @@
     {
         internal const string ProjectName = "R4Mvc5";
         internal const string PrefixName = "T4MVC";
-        internal const string Version = "1.0.3";
+        internal static string Version => Program.GetVersion();
         internal const string GetR4ActionResult = "GetT4MVCResult";
         internal const string IR4MvcActionResult = "IT4MVCActionResult";
 

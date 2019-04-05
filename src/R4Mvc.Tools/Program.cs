@@ -52,12 +52,23 @@ namespace R4Mvc.Tools
             await commandRunner.Run(projectPath, configuration, args);
         }
 
+        private static string _version { get; set; }
         internal static string GetVersion()
         {
+            if (_version != null)
+            {
+                return _version;
+            }
+
             var assembly = typeof(Program).Assembly;
             var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             if (version == null)
+            {
                 version = assembly.GetName().Version.ToString();
+            }
+
+            _version = version;
+
             return version;
         }
 

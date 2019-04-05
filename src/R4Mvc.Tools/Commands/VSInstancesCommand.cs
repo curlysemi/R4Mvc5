@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Build.Locator;
 using Microsoft.Extensions.Configuration;
 using R4Mvc.Tools.Commands.Core;
+using R4Mvc.Tools.Extensions;
 
 namespace R4Mvc.Tools.Commands
 {
@@ -26,7 +27,7 @@ showpath:
             {
                 var showPath = configuration.GetValue<bool?>("showPath") ?? false;
 
-                var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
+                var instances = InstancesHelper.GetVisualStudioInstances();
                 if (instances.Length == 0)
                 {
                     Console.WriteLine("No Visual Studio / MSBuild instances found.");

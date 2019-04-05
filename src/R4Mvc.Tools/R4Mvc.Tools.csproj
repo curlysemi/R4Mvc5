@@ -7,6 +7,7 @@
     <ContentTargetFolders>tools</ContentTargetFolders>
     <DevelopmentDependency>True</DevelopmentDependency>
     <IncludeBuildOutput>False</IncludeBuildOutput>
+    <DependsOnNETStandard>false</DependsOnNETStandard>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -25,9 +26,9 @@
     <AssemblyName>R4Mvc5</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>N/A</Company>
-    <Version>1.0.3</Version>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -46,7 +47,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.4" />
-    <PackageReference Include="Microsoft.Build.Locator" Version="1.0.31" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.2.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.9.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="2.9.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.1.1" />
@@ -59,6 +60,7 @@
 
   <ItemGroup>
     <Reference Include="System.Web" />
+    <Reference Include="netstandard" />
   </ItemGroup>
 
 </Project>

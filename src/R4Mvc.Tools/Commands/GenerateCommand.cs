@@ -206,7 +206,7 @@ project-path:
 
             private VisualStudioInstance InitialiseMSBuild(IConfiguration configuration)
             {
-                var instances = MSBuildLocator.QueryVisualStudioInstances().ToArray();
+                var instances = InstancesHelper.GetVisualStudioInstances();
                 if (instances.Length == 0)
                     Console.WriteLine("No Visual Studio instances found. The code generation might fail");
 
@@ -227,7 +227,7 @@ project-path:
                 }
                 else
                 {
-                    // Use hhe default vs instance and it's MSBuild
+                    // Use the default vs instance and its MSBuild
                     instance = MSBuildLocator.RegisterDefaults();
                 }
 
