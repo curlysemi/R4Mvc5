@@ -225,6 +225,15 @@ project-path:
                     instance = instances[vsInstanceIndex - 1];
                     MSBuildLocator.RegisterInstance(instance);
                 }
+                else if (instances.Length > 0)
+                {
+                    // Use the default vs instance and its MSBuild (after sorting, instead of relying on the unsorted default)
+
+                    // Register the selected vs instance. This will cause MSBuildWorkspace to use the MSBuild installed in that instance.
+                    // Note: This has to be registered *before* creating MSBuildWorkspace. Otherwise, the MEF composition used by MSBuildWorkspace will fail to compose.
+                    instance = instances[0];
+                    MSBuildLocator.RegisterInstance(instance);
+                }
                 else
                 {
                     // Use the default vs instance and its MSBuild
